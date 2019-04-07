@@ -92,7 +92,7 @@ public class AnimationLayout extends RelativeLayout implements ValueAnimator.Ani
 
     @Override
     public void onAnimationUpdate(ValueAnimator animation) {
-        int value = (int) animation.getAnimatedValue();
+        int value = (int) Integer.parseInt(animation.getAnimatedValue().toString());
         if (animateGravity == GRAVITY_TOP || animateGravity == GRAVITY_BOTTOM) {
             child.offsetTopAndBottom(value - preValue);
         } else {

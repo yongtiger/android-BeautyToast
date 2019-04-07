@@ -217,11 +217,11 @@ public class BeautyToast {
                     styleLayoutLP.width = target.getMeasuredWidth() + toastDesc.offsetW;
 
                     if (toastDesc.relativeGravity == RELATIVE_GRAVITY_START) {
-                        relativeGravity = RelativeLayout.ALIGN_PARENT_START;
+                        relativeGravity = RelativeLayout.ALIGN_PARENT_LEFT;
                     } else if (toastDesc.relativeGravity == RELATIVE_GRAVITY_CENTER) {
                         relativeGravity = RelativeLayout.CENTER_HORIZONTAL;
                     } else {
-                        relativeGravity = RelativeLayout.ALIGN_PARENT_END;
+                        relativeGravity = RelativeLayout.ALIGN_PARENT_RIGHT;
                     }
                 } else {
 
@@ -268,7 +268,7 @@ public class BeautyToast {
                         || toastDesc.layoutGravity == LAYOUT_GRAVITY_BOTTOM) {
                     wrapperLP.width = ViewGroup.LayoutParams.MATCH_PARENT;
                     if (toastDesc.relativeGravity == RELATIVE_GRAVITY_END) {
-                        gravityRule = RelativeLayout.ALIGN_PARENT_END;
+                        gravityRule = RelativeLayout.ALIGN_PARENT_RIGHT;
                     } else {
                         gravityRule = RelativeLayout.CENTER_HORIZONTAL;
                     }
@@ -303,9 +303,9 @@ public class BeautyToast {
                 if (toastDesc.layoutGravity == LAYOUT_GRAVITY_TOP
                         || toastDesc.layoutGravity == LAYOUT_GRAVITY_BOTTOM) {
                     if (toastDesc.relativeGravity == RELATIVE_GRAVITY_START) {
-                        gravityRule = RelativeLayout.ALIGN_PARENT_START;
+                        gravityRule = RelativeLayout.ALIGN_PARENT_LEFT;
                     } else if (toastDesc.relativeGravity == RELATIVE_GRAVITY_END) {
-                        gravityRule = RelativeLayout.ALIGN_PARENT_END;
+                        gravityRule = RelativeLayout.ALIGN_PARENT_RIGHT;
                     } else {
                         gravityRule = RelativeLayout.CENTER_HORIZONTAL;
                     }
@@ -341,7 +341,7 @@ public class BeautyToast {
                 if (toastDesc.layoutGravity == LAYOUT_GRAVITY_TOP
                         || toastDesc.layoutGravity == LAYOUT_GRAVITY_BOTTOM) {
                     if (toastDesc.relativeGravity == RELATIVE_GRAVITY_END) {
-                        gravityRule = RelativeLayout.ALIGN_PARENT_END;
+                        gravityRule = RelativeLayout.ALIGN_PARENT_RIGHT;
                     } else {
                         gravityRule = RelativeLayout.CENTER_HORIZONTAL;
                     }
@@ -379,14 +379,18 @@ public class BeautyToast {
 
         lp.width = WindowManager.LayoutParams.WRAP_CONTENT;
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        lp.gravity = Gravity.START | Gravity.TOP;
+        lp.gravity = Gravity.LEFT | Gravity.TOP;
         if (toastDesc.sameLength) {
             switch (toastDesc.layoutGravity) {
                 case LAYOUT_GRAVITY_LEFT:
+                    // measure is necessary
                     int measureSpecL = View.MeasureSpec.makeMeasureSpec(
                             target.getMeasuredHeight() + toastDesc.offsetH,
                             View.MeasureSpec.EXACTLY);
-                    // measure is necessary
+
+                    ///[FIX BUG#API 17改为兼容API 15]
+                    content.setLayoutParams(new ViewGroup.LayoutParams(0,0));
+
                     content.measure(ViewGroup.LayoutParams.WRAP_CONTENT,
                             measureSpecL);
                     lp.x = viewLocation[0] - content.getMeasuredWidth() + toastDesc.offsetX;
@@ -398,6 +402,10 @@ public class BeautyToast {
                     int measureSpecR = View.MeasureSpec.makeMeasureSpec(
                             target.getMeasuredHeight() + toastDesc.offsetH,
                             View.MeasureSpec.EXACTLY);
+
+                    ///[FIX BUG#API 17改为兼容API 15]
+                    content.setLayoutParams(new ViewGroup.LayoutParams(0,0));
+
                     content.measure(ViewGroup.LayoutParams.WRAP_CONTENT,
                             measureSpecR);
                     lp.x = viewLocation[0] + target.getMeasuredWidth() + toastDesc.offsetX;
@@ -408,6 +416,10 @@ public class BeautyToast {
                     // measure is necessary
                     int measureSpecT = View.MeasureSpec.makeMeasureSpec(target.getMeasuredWidth()
                             + toastDesc.offsetW, View.MeasureSpec.EXACTLY);
+
+                    ///[FIX BUG#API 17改为兼容API 15]
+                    content.setLayoutParams(new ViewGroup.LayoutParams(0,0));
+
                     content.measure(measureSpecT,
                             ViewGroup.LayoutParams.WRAP_CONTENT);
                     lp.x = viewLocation[0] + toastDesc.offsetX;
@@ -418,6 +430,10 @@ public class BeautyToast {
                     // measure is necessary
                     int measureSpecB = View.MeasureSpec.makeMeasureSpec(target.getMeasuredWidth()
                             + toastDesc.offsetW, View.MeasureSpec.EXACTLY);
+
+                    ///[FIX BUG#API 17改为兼容API 15]
+                    content.setLayoutParams(new ViewGroup.LayoutParams(0,0));
+
                     content.measure(measureSpecB,
                             ViewGroup.LayoutParams.WRAP_CONTENT);
                     lp.x = viewLocation[0] + toastDesc.offsetX;
@@ -436,6 +452,10 @@ public class BeautyToast {
                         heightSpec = View.MeasureSpec.makeMeasureSpec(target.getMeasuredHeight()
                                 + toastDesc.offsetH, View.MeasureSpec.EXACTLY);
                     }
+
+                    ///[FIX BUG#API 17改为兼容API 15]
+                    content.setLayoutParams(new ViewGroup.LayoutParams(0,0));
+
                     content.measure(ViewGroup.LayoutParams.WRAP_CONTENT, heightSpec);
                     lp.x = viewLocation[0] - content.getMeasuredWidth() + toastDesc.offsetX;
                     lp.y = viewLocation[1] + toastDesc.offsetY;
@@ -450,6 +470,10 @@ public class BeautyToast {
                         widthSpec = View.MeasureSpec.makeMeasureSpec(target.getMeasuredWidth()
                                 + toastDesc.offsetW, View.MeasureSpec.EXACTLY);
                     }
+
+                    ///[FIX BUG#API 17改为兼容API 15]
+                    content.setLayoutParams(new ViewGroup.LayoutParams(0,0));
+
                     content.measure(widthSpec, ViewGroup.LayoutParams.WRAP_CONTENT);
                     lp.x = viewLocation[0] + toastDesc.offsetX;
                     lp.y = viewLocation[1] - content.getMeasuredHeight() + toastDesc.offsetY;
@@ -490,7 +514,7 @@ public class BeautyToast {
         Toast toast = new Toast(app);
         toast.setView(toastView);
 
-        ///[FIX BUG#]关闭通知权限后Toast无法显示
+        ///[FIX BUG#关闭通知权限后Toast无法显示]
 //        toast.show();
         if(isNotificationEnabled(app)){
             toast.show();
@@ -502,7 +526,7 @@ public class BeautyToast {
         mainThreadHandler.sendEmptyMessageDelayed(FINISH_NO_TARGET_TOAST, delay);
     }
 
-    ///[FIX BUG#]关闭通知权限后Toast无法显示
+    ///[FIX BUG#关闭通知权限后Toast无法显示]
     /**
      * 消息通知是否开启
      * @return
@@ -1029,20 +1053,28 @@ public class BeautyToast {
                 BeautyToast.DEFAULT_DURATION = BeautyToast.DURATION_LONG;
             }
 
+
             BeautyToast.SUCCESS_COLOR = successColor;
             BeautyToast.ERROR_COLOR = errorColor;
             BeautyToast.INFO_COLOR = infoColor;
             BeautyToast.WARNING_COLOR = warningColor;
+
+
             BeautyToast.TEXT_COLOR = textColor;
-            BeautyToast.SHOW_ICON = showIcon;
-            BeautyToast.ANIMATE = animate;
-            BeautyToast.SAME_LENGTH = sameLength;
             BeautyToast.TEXT_SIZE = textSize;
-            BeautyToast.LAYOUT_GRAVITY = layoutGravity;
-            BeautyToast.ANIMATION_GRAVITY = animationGravity;
             BeautyToast.RELATIVE_GRAVITY = relativeGravity;
-            BeautyToast.ANIMATION_DURATION = animationDuration;
             BeautyToast.RADIUS = radius;
+            BeautyToast.SHOW_ICON = showIcon;
+
+
+            BeautyToast.SAME_LENGTH = sameLength;
+            BeautyToast.LAYOUT_GRAVITY = layoutGravity;
+
+
+            BeautyToast.ANIMATE = animate;
+            BeautyToast.ANIMATION_GRAVITY = animationGravity;
+            BeautyToast.ANIMATION_DURATION = animationDuration;
+
 
             BeautyToast.init(app);
         }
