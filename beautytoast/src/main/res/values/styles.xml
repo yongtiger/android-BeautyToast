@@ -8,4 +8,16 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!-- ///[layout_transient_notification.xml#textAppearance: API 20及以前] -->
+    <style name="Small">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@android:color/secondary_text_light</item>
+    </style>
+
+    <!-- ///[layout_transient_notification.xml#textAppearance: API 21及以后] -->
+    <style name="Toast">
+        <item name="fontFamily">sans-serif</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
 </resources>
