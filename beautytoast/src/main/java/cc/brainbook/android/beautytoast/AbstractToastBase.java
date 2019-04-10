@@ -15,25 +15,37 @@ import static cc.brainbook.android.beautytoast.BuildConfig.DEBUG;
 public abstract class AbstractToastBase {
     private static final String TAG = "TAG";
 
-    ///duration
+    /**
+     * Toast的缺省时长（毫秒）
+     */
     public static final int LENGTH_SHORT = 3000;    ///毫秒
     public static final int LENGTH_LONG = 4500;    ///毫秒
 
-    ///handler
+    /**
+     * MainThreadHandler
+     */
     private static final int SHOW = 0;
     private static final int CANCEL = 1;
     private static Handler sMainThreadHandler = new MainThreadHandler();
 
-    ///Toast队列
+    /**
+     * Toast队列
+     */
     ///Note: LinkedList is implemented as a double linked list. Its performance on add and remove is better than Arraylist, but worse on get and set methods.
     ///https://dzone.com/articles/arraylist-vs-linkedlist-vs
     ///https://blog.csdn.net/u012926924/article/details/47955035
     private static final LinkedList<AbstractToastBase> TOAST_LIST = new LinkedList<>();
 
-    ///正在显示的Toast
+    /**
+     * 正在显示的Toast
+     *
+     * 注意：当Context（如Activity/Fragment等）销毁时必须调用AbstractToastBase.clear(Context)方法清除，避免内存泄漏！
+     */
     private static AbstractToastBase sCurrentShowingToast;
 
-    ///是否notify的标志（用volatile修饰符！）
+    /**
+     * 是否notify的标志（用volatile修饰符！）
+     */
     private volatile static boolean sIsNotifiable = false;
 
     static {
@@ -157,19 +169,20 @@ public abstract class AbstractToastBase {
         remove(context);
 
         if (sCurrentShowingToast != null && context.getClass().toString().equals(sCurrentShowingToast.mClassName)) {
-            sCurrentShowingToast.handleCancel();
-
-            synchronized (TOAST_LIST) {
-                ///清空正在显示的Toast
-                sCurrentShowingToast = null;
-
-                TOAST_LIST.notifyAll();
-            }
+            ///发送消息：取消Toast
+            sMainThreadHandler.obtainMessage(CANCEL, sCurrentShowingToast).sendToTarget();
         }
 
     }
 
+    /**
+     * 上下文Context
+     */
     protected Context mContext;
+
+    /**
+     * Toast的类名（包含包名在内的完整类名）
+     */
     private String mClassName;
 
     protected AbstractToastBase(Context context) {
@@ -222,7 +235,14 @@ public abstract class AbstractToastBase {
         sMainThreadHandler.obtainMessage(CANCEL, this).sendToTarget();
     }
 
+    /**
+     * 抽象方法：handleShow()
+     */
     protected abstract void handleShow();
+
+    /**
+     * 抽象方法：handleCancel()
+     */
     protected abstract void handleCancel();
 
 }
