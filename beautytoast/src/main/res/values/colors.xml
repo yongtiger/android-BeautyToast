@@ -5,6 +5,7 @@
     <color name="colorAccent">#FF4081</color>
 
     <!--BeautyToast的Color-->
+    <color name="colorBeautyToastTextColor">#FFFFFF</color>
     <color name="colorBeautyToastBackground">#353A3E</color>
     <color name="colorBeautyToastBackgroundWarning">#FFA900</color>
     <color name="colorBeautyToastBackgroundInfo">#FFA900</color>

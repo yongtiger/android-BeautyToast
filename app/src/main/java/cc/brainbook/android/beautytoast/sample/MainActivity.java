@@ -15,6 +15,8 @@ import android.widget.Toast;
 import cc.brainbook.android.beautytoast.BeautyToast;
 import cc.brainbook.android.beautytoast.ToastBase;
 
+import static cc.brainbook.android.beautytoast.BeautyToast.HALF_HEIGHT_CORNER_RADIUS;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -46,21 +48,14 @@ public class MainActivity extends AppCompatActivity {
 //        ToastBase toastBase = new ToastBase(this);
 //
 //        /* ------------------ 获得并设置View、TextView ------------------ */
-//        final LayoutInflater inflate = (LayoutInflater)
-//                this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//        @LayoutRes int resource;
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            resource = cc.brainbook.android.beautytoast.R.layout.layout_transient_notification_api_27;
-//        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//            resource = cc.brainbook.android.beautytoast.R.layout.layout_transient_notification_api_21;
-//        } else {
-//            resource = cc.brainbook.android.beautytoast.R.layout.layout_transient_notification;
-//        }
-//        final View view = inflate.inflate(resource, null);
 //        ///设置View
-//        toastBase.setView(view);
+//        toastBase.setView(toastBase.getDefaultView());
 //        ///设置TextView
-//        toastBase.setTextView((TextView) view.findViewById(cc.brainbook.android.beautytoast.R.id.message));
+//        toastBase.setTextView(toastBase.getDefaultTextView());
+//
+//        toastBase.setText("new ToastBase!!");
+//
+//        toastBase.setDuration(ToastBase.LENGTH_LONG);
 //        /* ------------------ 获得并设置View、TextView ------------------ */
 //
 //        toastBase.setText("new ToastBase!");
@@ -69,12 +64,12 @@ public class MainActivity extends AppCompatActivity {
 
         /* ------------- BeautyToast ------------- */
         ///makeText
-//        BeautyToast beautyToast = BeautyToast.makeText(getApplicationContext(),"BeautyToast!", BeautyToast.LENGTH_SHORT);
+        BeautyToast beautyToast = BeautyToast.makeText(getApplicationContext(),"BeautyToast!", BeautyToast.LENGTH_SHORT);
 //        BeautyToast beautyToast = BeautyToast.makeText(getApplicationContext(),"BeautyToast!", BeautyToast.LENGTH_LONG);
 //        BeautyToast beautyToast = BeautyToast.makeText(getApplicationContext(),"BeautyToast!", 15000);
 //        BeautyToast beautyToast = BeautyToast.makeText(this,"ToastBase!", 15000);   ///测试销毁时是否内存泄漏
 
-        BeautyToast beautyToast = BeautyToast.makeWarningText(getApplicationContext(),"WarningBeautyToast!", BeautyToast.LENGTH_SHORT);
+//        BeautyToast beautyToast = BeautyToast.makeWarningText(getApplicationContext(),"WarningBeautyToast!", BeautyToast.LENGTH_SHORT);
 //        BeautyToast beautyToast = BeautyToast.makeInfoText(getApplicationContext(),"Info BeautyToast!", BeautyToast.LENGTH_SHORT);
 //        BeautyToast beautyToast = BeautyToast.makeSuccessText(getApplicationContext(),"Success BeautyToast!", BeautyToast.LENGTH_SHORT);
 //        BeautyToast beautyToast = BeautyToast.makeErrorText(getApplicationContext(),"Error BeautyToast!", BeautyToast.LENGTH_SHORT);
@@ -82,12 +77,32 @@ public class MainActivity extends AppCompatActivity {
 //        beautyToast.isShowIcon(false);
 
         beautyToast.setText("BeautyToast!!");
-        beautyToast.setGravity(Gravity.TOP | Gravity.RIGHT, 50, 50);
+//        beautyToast.setGravity(Gravity.TOP | Gravity.RIGHT, 50, 50);
 
         beautyToast.show();
 
 //        ///new
 //        BeautyToast beautyToast = new BeautyToast(this);
+//
+//        /* ------------------ 获得并设置View、TextView、ImageView ------------------ */
+//        ///设置View
+//        beautyToast.setView(beautyToast.getDefaultView());
+//        ///设置TextView
+//        beautyToast.setTextView(beautyToast.getDefaultTextView()) ;
+//        ///设置ImageView
+//        beautyToast.setImageView(beautyToast.getDefaultImageView()) ;
+//
+//        beautyToast.setText("new BeautyToast!!");
+//
+//        beautyToast.setDuration(BeautyToast.LENGTH_LONG);
+//
+//        ///设置圆角弧度
+//        beautyToast.setGradientDrawableCornerRadius(HALF_HEIGHT_CORNER_RADIUS);
+////        beautyToast.setGradientDrawableCornerRadius(HALF_HEIGHT_CORNER_RADIUS / 4); ///test
+////        beautyToast.setGradientDrawableCornerRadius(10);    ///test
+//
+//        /* ------------------ 获得并设置View、TextView ------------------ */
+//
 //        beautyToast.setText("new BeautyToast!");
 //        beautyToast.show();
 
