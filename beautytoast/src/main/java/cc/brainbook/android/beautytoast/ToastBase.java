@@ -1,8 +1,12 @@
 package cc.brainbook.android.beautytoast;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.annotation.ColorInt;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.StringRes;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,30 +21,36 @@ import static cc.brainbook.android.beautytoast.BuildConfig.DEBUG;
 public class ToastBase extends AbstractToastBase {
     private static final String TAG = "TAG";
 
-    private Toast mToast;
+    protected Toast mToast;
     private CountDownTimer mCountDownTimer;
+
+    /**
+     * Make a standard toast that just contains a text view.
+     *
+     * @param context
+     * @param text
+     * @param duration
+     * @return
+     */
+    public static ToastBase makeText(Context context, CharSequence text, long duration) {
+        final ToastBase toastBase = new ToastBase(context);
+
+        ///设置View
+        toastBase.setView(toastBase.getDefaultView());
+        ///设置TextView
+        toastBase.setTextView(toastBase.getDefaultTextView());
+
+        toastBase.setText(text);
+
+        toastBase.setDuration(duration);
+
+        return toastBase;
+    }
 
     public ToastBase(Context context) {
         super(context);
 
         mToast = new Toast(context);
-
-        final LayoutInflater inflate = (LayoutInflater)
-                context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        @LayoutRes int resource;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            resource = R.layout.layout_transient_notification_api_27;
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            resource = R.layout.layout_transient_notification_api_21;
-        } else {
-            resource = R.layout.layout_transient_notification;
-        }
-        final View view = inflate.inflate(resource, null);
-
-        mTextView = (TextView) view.findViewById(R.id.message);
-
-        mToast.setView(view);
     }
 
     @Override
@@ -52,7 +62,7 @@ public class ToastBase extends AbstractToastBase {
         ///[FIX#Duration可随意选择:API25+失效]只能等上一个Toast快结束时（约974毫秒）再次show！
         long countDownInterval;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
-            countDownInterval = LENGTH_LONG - 950;    ///实测大于974肯定失效！
+            countDownInterval = LENGTH_LONG - 950;    ///注意：实测大于974肯定失效！
         } else{
             countDownInterval = LENGTH_SHORT;
         }
@@ -95,19 +105,6 @@ public class ToastBase extends AbstractToastBase {
     }
 
 
-    /* ---------------- 静态方法：makeText() ---------------- */
-    public static ToastBase makeText(Context context, CharSequence text, long duration) {
-        final ToastBase toastBase = new ToastBase(context);
-
-        toastBase.setText(text);
-
-        toastBase.setDuration(duration);
-
-        return toastBase;
-    }
-    /* ---------------- 静态方法：makeText() ---------------- */
-
-
     /* ---------------- 动态方法：参照Toast源码 ---------------- */
     ///text
     public ToastBase setText(CharSequence text) {
@@ -115,6 +112,11 @@ public class ToastBase extends AbstractToastBase {
             throw new RuntimeException("mTextView cannot be null");
         }
         mTextView.setText(text);
+
+        return this;
+    }
+    public ToastBase setText(@StringRes int resId) {
+        setText(mContext.getText(resId));
 
         return this;
     }
@@ -129,7 +131,25 @@ public class ToastBase extends AbstractToastBase {
 
     ///view
     public View getView() {
+        if (mToast.getView() == null) {
+            mToast.setView(getDefaultView());
+        }
+
         return mToast.getView();
+    }
+    public View getDefaultView() {
+        final LayoutInflater layoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        @LayoutRes int resource;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            resource = R.layout.layout_transient_notification_api_27;
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            resource = R.layout.layout_transient_notification_api_21;
+        } else {
+            resource = R.layout.layout_transient_notification;
+        }
+
+        return layoutInflater.inflate(resource, null);
     }
     public ToastBase setView(View view) {
         mToast.setView(view);
@@ -138,9 +158,17 @@ public class ToastBase extends AbstractToastBase {
     }
 
     ///text view
-    private TextView mTextView;
+    protected TextView mTextView;
     public TextView getTextView() {
+        if (mTextView == null) {
+            mTextView = getDefaultTextView();
+        }
+
         return mTextView;
+    }
+    public TextView getDefaultTextView() {
+        final View view = getView();
+        return (TextView) view.findViewById(R.id.message);
     }
     public ToastBase setTextView(TextView textView) {
         mTextView = textView;
@@ -177,5 +205,56 @@ public class ToastBase extends AbstractToastBase {
         return this;
     }
     /* ---------------- 动态方法：参照Toast源码 ---------------- */
+
+
+    /* ---------------- 动态方法 ---------------- */
+    ///text color
+    public ToastBase setTextColor(@ColorInt int textColor) {
+        if (mTextView == null) {
+            throw new RuntimeException("mTextView cannot be null");
+        }
+        mTextView.setTextColor(textColor);
+
+        return this;
+    }
+
+    ///text size
+    public ToastBase setTextSize(float textSize) {
+        if (mTextView == null) {
+            throw new RuntimeException("mTextView cannot be null");
+        }
+        mTextView.setTextSize(textSize);
+
+        return this;
+    }
+    public ToastBase setTextSize(int unit, float textSize) {
+        if (mTextView == null) {
+            throw new RuntimeException("mTextView cannot be null");
+        }
+        mTextView.setTextSize(unit, textSize);
+
+        return this;
+    }
+
+    ///background
+    public ToastBase setBackground(Drawable drawableRes) {
+        final View view = getView();
+
+        ///[FIX BUG#API 17改为兼容API 15]
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            view.setBackground(drawableRes);
+        } else {
+            view.setBackgroundDrawable(drawableRes);
+        }
+
+        return this;
+    }
+    public ToastBase setBackgroundColor(@ColorInt int backgroundColor) {
+        final View view = getView();
+        view.setBackgroundColor(backgroundColor);
+
+        return this;
+    }
+    /* ---------------- 动态方法 ---------------- */
 
 }

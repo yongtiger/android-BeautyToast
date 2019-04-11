@@ -231,6 +231,8 @@ public abstract class AbstractToastBase {
      * 取消Toast
      */
     public void cancel() {
+        if (DEBUG) Log.d(TAG, "cancel()# ");
+
         ///发送消息：取消Toast
         sMainThreadHandler.obtainMessage(CANCEL, this).sendToTarget();
     }

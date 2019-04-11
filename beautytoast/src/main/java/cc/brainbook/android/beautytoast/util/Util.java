@@ -1,6 +1,7 @@
 package cc.brainbook.android.beautytoast.util;
 
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.support.v4.app.NotificationManagerCompat;
@@ -13,24 +14,6 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
 public class Util {
-
-     public static void setGradientDrawable(View layout, float[] radiusArr, int color){
-        GradientDrawable gradientDrawable = new GradientDrawable();
-
-        gradientDrawable.setColor(color);
-        gradientDrawable.setCornerRadii(radiusArr);
-
-         ///[FIX BUG#API 17改为兼容API 15]
-         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-             layout.setBackground(gradientDrawable);
-         } else {
-             layout.setBackgroundDrawable(gradientDrawable);
-         }
-     }
-
-    public static boolean isTrimEmpty(CharSequence text) {
-        return text == null || text.toString().trim().equals("");
-    }
 
     ///[FIX BUG#关闭通知权限后Toast无法显示]
     /**
