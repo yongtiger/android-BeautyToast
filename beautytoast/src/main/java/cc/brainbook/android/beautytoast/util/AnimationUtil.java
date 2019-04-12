@@ -8,10 +8,10 @@ public class AnimationUtil {
      * 动画方式
      */
     public static final int NO_ANIMATION = 0;
-    public static final int ANIMATION_TRANSLATION_LEFT = 1;
-    public static final int ANIMATION_TRANSLATION_TOP = 2;
-    public static final int ANIMATION_TRANSLATION_RIGHT = 3;
-    public static final int ANIMATION_TRANSLATION_BOTTOM = 4;
+    public static final int ANIMATION_IN_TRANSLATION_LEFT = 1;
+    public static final int ANIMATION_IN_TRANSLATION_TOP = 2;
+    public static final int ANIMATION_IN_TRANSLATION_RIGHT = 3;
+    public static final int ANIMATION_IN_TRANSLATION_BOTTOM = 4;
 
     /**
      * 根据动画方式获取ObjectAnimator对象
@@ -23,25 +23,26 @@ public class AnimationUtil {
      * @return
      */
     public static ObjectAnimator getAnimatorByMode(int animationMode, View view, int width, int height) {
-        ObjectAnimator animator;
+        ObjectAnimator animator = null;
 
         switch (animationMode) {
-            case ANIMATION_TRANSLATION_LEFT:
+            case ANIMATION_IN_TRANSLATION_LEFT:
                 animator = ObjectAnimator.ofFloat(view, "translationX", -width, 0);
 
                 break;
-            case ANIMATION_TRANSLATION_TOP:
+            case ANIMATION_IN_TRANSLATION_TOP:
                 animator = ObjectAnimator.ofFloat(view, "translationY", -height, 0);
 
                 break;
-            case ANIMATION_TRANSLATION_RIGHT:
+            case ANIMATION_IN_TRANSLATION_RIGHT:
                 animator = ObjectAnimator.ofFloat(view, "translationX", width, 0);
 
                 break;
-            default:
+            case ANIMATION_IN_TRANSLATION_BOTTOM:
                 animator = ObjectAnimator.ofFloat(view, "translationY", height, 0);
 
                 break;
+            default:
 
         }
 

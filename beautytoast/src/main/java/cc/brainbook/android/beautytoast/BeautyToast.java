@@ -7,6 +7,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -230,11 +231,12 @@ public class BeautyToast extends ToastBase {
         return this;
     }
 
+    ///view: AnimationIn 入场动画
     private View.OnLayoutChangeListener mOnLayoutChangeListener;
-    public ToastBase setAnimation(final int animationMode) {
+    public ToastBase setAnimationIn(final int animationInMode) {
         final View view = getView();
 
-        if (animationMode != AnimationUtil.NO_ANIMATION) {
+        if (animationInMode != AnimationUtil.NO_ANIMATION) {
             mOnLayoutChangeListener = new View.OnLayoutChangeListener() {
                 @Override
                 public void onLayoutChange(View view, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
@@ -244,17 +246,17 @@ public class BeautyToast extends ToastBase {
                     final int height = view.getMeasuredHeight();
 
                     ///根据动画方式获取ObjectAnimator对象
-                    ObjectAnimator animator = AnimationUtil.getAnimatorByMode(animationMode, view, width, height);
-
-                    animator.setDuration(mAnimationDuration);
-                    animator.start();
+                    final ObjectAnimator animator = AnimationUtil.getAnimatorByMode(animationInMode, view, width, height);
+                    if (animator != null) {
+                        animator.setDuration(mAnimationDuration);
+                        animator.start();
+                    }
                 }
             };
 
             view.addOnLayoutChangeListener(mOnLayoutChangeListener);
 
         } else if (mOnLayoutChangeListener != null) {
-//            view.addOnLayoutChangeListener(null);///????????
             view.removeOnLayoutChangeListener(mOnLayoutChangeListener);
         }
 

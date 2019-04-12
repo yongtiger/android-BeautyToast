@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import cc.brainbook.android.beautytoast.BeautyToast;
-import cc.brainbook.android.beautytoast.ToastBase;
 import cc.brainbook.android.beautytoast.util.AnimationUtil;
 
 public class MainActivity extends AppCompatActivity {
@@ -98,13 +97,33 @@ public class MainActivity extends AppCompatActivity {
 //        beautyToast.setText("new BeautyToast!");
 //        beautyToast.show();
 
+
         /* -------------------- animation -------------------- */
-        beautyToast.setAnimation(AnimationUtil.ANIMATION_TRANSLATION_LEFT);
-//        beautyToast.setAnimation(AnimationUtil.ANIMATION_TRANSLATION_TOP);
-//        beautyToast.setAnimation(AnimationUtil.ANIMATION_TRANSLATION_RIGHT);
-//        beautyToast.setAnimation(AnimationUtil.ANIMATION_TRANSLATION_BOTTOM);
-//        beautyToast.setAnimation(AnimationUtil.NO_ANIMATION);
+        beautyToast.setAnimationIn(AnimationUtil.ANIMATION_IN_TRANSLATION_LEFT);
+//        beautyToast.setAnimationIn(AnimationUtil.ANIMATION_IN_TRANSLATION_TOP);
+//        beautyToast.setAnimationIn(AnimationUtil.ANIMATION_IN_TRANSLATION_RIGHT);
+//        beautyToast.setAnimationIn(AnimationUtil.ANIMATION_TRANSLATION_BOTTOM);
+//        beautyToast.setAnimationIn(AnimationUtil.NO_ANIMATION);
+//        beautyToast.show();
+
+        //////////////////////////////////////////////////////
+
+//        View view = beautyToast.getView();
+//        view.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
+//            @Override
+//            public void onViewAttachedToWindow(View view) {
+//                Log.d("TAG", "onViewAttachedToWindow: ");
+////                view.animate().translationX(-300).setDuration(2000);
+//            }
+//
+//            @Override
+//            public void onViewDetachedFromWindow(View view) {
+//                Log.d("TAG", "onViewDetachedFromWindow: ");
+//                view.animate().translationX(-300).setDuration(2000);
+//            }
+//        });
         beautyToast.show();
+
 
     }
 
