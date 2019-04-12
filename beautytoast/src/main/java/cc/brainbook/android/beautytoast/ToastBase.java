@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.RequiresApi;
 import android.support.annotation.StringRes;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -265,6 +266,33 @@ public class ToastBase extends AbstractToastBase {
     public ToastBase setBackgroundColor(@ColorInt int backgroundColor) {
         final View view = getView();
         view.setBackgroundColor(backgroundColor);
+
+        return this;
+    }
+
+    ///LayoutFullScreen
+    private boolean isLayoutFullScreen = false;
+    public boolean isLayoutFullScreen() {
+        return isLayoutFullScreen;
+    }
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+    /**
+     * 设置Toast是否为全屏布局
+     *
+     * Toast默认Gravity的坐标系不包含状态栏（即非全屏，与BeautyToast中Target产生高度上的错位！）
+     * 设置为全屏模式后，Gravity的坐标系为全屏，包含了状态栏（与BeautyToast中Target的坐标系保持一致）
+     *
+     * 注意：必须API 16+
+     */
+    public ToastBase isGravityFullScreen(boolean isGravityFullScreen) {
+        this.isLayoutFullScreen = isGravityFullScreen;
+
+        final View view = getView();
+        if (isGravityFullScreen) {
+            view.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);  ///全局布局
+        } else {
+            view.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);    ///恢复正常
+        }
 
         return this;
     }

@@ -6,12 +6,15 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 
 import cc.brainbook.android.beautytoast.util.AnimationUtil;
@@ -25,7 +28,6 @@ public class BeautyToast extends ToastBase {
 
     public static final long DEFAULT_ANIMATION_IN_DURATION = 800L;  ///毫秒
     public static final long DEFAULT_ANIMATION_OUT_DURATION = 800L;  ///毫秒
-
 
     /**
      * Make a standard toast that just contains a text view.
@@ -228,6 +230,8 @@ public class BeautyToast extends ToastBase {
         return this;
     }
 
+
+    /* ---------------- 动画 ---------------- */
     ///view: AnimationIn 入场动画
     private long mAnimationInDuration = DEFAULT_ANIMATION_IN_DURATION;
     public ToastBase setAnimationInDuration(long animationInDuration) {
@@ -279,8 +283,7 @@ public class BeautyToast extends ToastBase {
 
         return this;
     }
-    /* ---------------- 动态方法 ---------------- */
-
+    /* ---------------- 动画 ---------------- */
 
 
     /**
@@ -291,6 +294,7 @@ public class BeautyToast extends ToastBase {
      * @param duration
      * @return
      */
+    @Override
     protected long calMillisInFuture(long duration) {
         ///view: AnimationOut 出场动画
         if (mAnimationOutMode != AnimationUtil.NO_ANIMATION) {
@@ -330,4 +334,40 @@ public class BeautyToast extends ToastBase {
         }
     }
 
+    ///target
+    private View mTarget;
+    public View getTarget() {
+        return mTarget;
+    }
+    public ToastBase setTarget(View view) {
+        mTarget = view;
+
+        if (mTarget != null) {
+            mTarget.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    if (DEBUG) Log.d(TAG, "onGlobalLayout()# mTarget: " + mTarget.getWidth() + ", " + mTarget.getHeight());
+
+                    if (Build.VERSION.SDK_INT >= 16) {
+                        mTarget.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    }else {
+                        mTarget.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                    }
+
+                    final int[] targetLocation = new int[2];
+//                    mTarget.getLocationInWindow(targetLocation);
+                    mTarget.getLocationOnScreen(targetLocation);
+                    int x = targetLocation[0];
+//                    int x = targetLocation[0] - getView().getMeasuredWidth() + getXOffset();
+                    int y = targetLocation[1];
+//                    int y = targetLocation[1] + getYOffset();
+
+                    setGravity(Gravity.TOP | Gravity.LEFT, 0, 0);
+//                    setGravity(Gravity.TOP | Gravity.LEFT, x, y);
+                }
+            });
+        }
+
+        return this;
+    }
 }
