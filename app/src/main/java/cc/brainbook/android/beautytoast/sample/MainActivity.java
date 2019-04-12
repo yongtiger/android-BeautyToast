@@ -100,17 +100,17 @@ public class MainActivity extends AppCompatActivity {
 
         /* -------------------- animation -------------------- */
         ///AnimationIn 入场动画
-//        beautyToast.setAnimationIn(AnimationUtil.ANIMATION_LEFT_IN);
+        beautyToast.setAnimationIn(AnimationUtil.ANIMATION_LEFT_IN);
 //        beautyToast.setAnimationIn(AnimationUtil.ANIMATION_TOP_IN);
 //        beautyToast.setAnimationIn(AnimationUtil.ANIMATION_RIGHT_IN);
 //        beautyToast.setAnimationIn(AnimationUtil.ANIMATION_BOTTOM_IN);
-        beautyToast.setAnimationIn(AnimationUtil.ANIMATION_FADE_IN);
+//        beautyToast.setAnimationIn(AnimationUtil.ANIMATION_FADE_IN);
         ///AnimationOut 出场动画
 //        beautyToast.setAnimationOut(AnimationUtil.ANIMATION_LEFT_OUT);
-//        beautyToast.setAnimationOut(AnimationUtil.ANIMATION_TOP_OUT);
+        beautyToast.setAnimationOut(AnimationUtil.ANIMATION_TOP_OUT);
 //        beautyToast.setAnimationOut(AnimationUtil.ANIMATION_RIGHT_OUT);
 //        beautyToast.setAnimationOut(AnimationUtil.ANIMATION_BOTTOM_OUT);
-        beautyToast.setAnimationOut(AnimationUtil.ANIMATION_FADE_OUT);
+//        beautyToast.setAnimationOut(AnimationUtil.ANIMATION_FADE_OUT);
         ///取消动画
 //        beautyToast.setAnimationOut(AnimationUtil.NO_ANIMATION);
 

@@ -281,6 +281,24 @@ public class BeautyToast extends ToastBase {
     }
     /* ---------------- 动态方法 ---------------- */
 
+
+
+    /**
+     * 计算CountDownTimer的总时长
+     *
+     * 注意：覆写此方法，扣除出场动画的时间
+     *
+     * @param duration
+     * @return
+     */
+    protected long calMillisInFuture(long duration) {
+        ///view: AnimationOut 出场动画
+        if (mAnimationOutMode != AnimationUtil.NO_ANIMATION) {
+            return duration - mAnimationOutDuration;
+        }
+        return duration;
+    }
+
     @Override
     protected void handleCancel() {
         if (DEBUG) Log.d(TAG, "BeautyToast# handleCancel()# ");
