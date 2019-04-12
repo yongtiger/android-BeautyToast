@@ -99,33 +99,21 @@ public class MainActivity extends AppCompatActivity {
 
 
         /* -------------------- animation -------------------- */
-        beautyToast.setAnimationIn(AnimationUtil.ANIMATION_IN_TRANSLATION_LEFT);
-//        beautyToast.setAnimationIn(AnimationUtil.ANIMATION_IN_TRANSLATION_TOP);
-//        beautyToast.setAnimationIn(AnimationUtil.ANIMATION_IN_TRANSLATION_RIGHT);
-//        beautyToast.setAnimationIn(AnimationUtil.ANIMATION_IN_TRANSLATION_BOTTOM);
-        beautyToast.setAnimationOut(AnimationUtil.ANIMATION_OUT_TRANSLATION_LEFT);
-//        beautyToast.setAnimationOut(AnimationUtil.ANIMATION_OUT_TRANSLATION_TOP);
-//        beautyToast.setAnimationOut(AnimationUtil.ANIMATION_OUT_TRANSLATION_RIGHT);
-//        beautyToast.setAnimationOut(AnimationUtil.ANIMATION_OUT_TRANSLATION_BOTTOM);
+        ///AnimationIn 入场动画
+//        beautyToast.setAnimationIn(AnimationUtil.ANIMATION_LEFT_IN);
+//        beautyToast.setAnimationIn(AnimationUtil.ANIMATION_TOP_IN);
+//        beautyToast.setAnimationIn(AnimationUtil.ANIMATION_RIGHT_IN);
+//        beautyToast.setAnimationIn(AnimationUtil.ANIMATION_BOTTOM_IN);
+        beautyToast.setAnimationIn(AnimationUtil.ANIMATION_FADE_IN);
+        ///AnimationOut 出场动画
+//        beautyToast.setAnimationOut(AnimationUtil.ANIMATION_LEFT_OUT);
+//        beautyToast.setAnimationOut(AnimationUtil.ANIMATION_TOP_OUT);
+//        beautyToast.setAnimationOut(AnimationUtil.ANIMATION_RIGHT_OUT);
+//        beautyToast.setAnimationOut(AnimationUtil.ANIMATION_BOTTOM_OUT);
+        beautyToast.setAnimationOut(AnimationUtil.ANIMATION_FADE_OUT);
+        ///取消动画
 //        beautyToast.setAnimationOut(AnimationUtil.NO_ANIMATION);
-//        beautyToast.show();
 
-        //////////////////////////////////////////////////////
-
-//        View view = beautyToast.getView();
-//        view.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
-//            @Override
-//            public void onViewAttachedToWindow(View view) {
-//                Log.d("TAG", "onViewAttachedToWindow: ");
-////                view.animate().translationX(-300).setDuration(2000);
-//            }
-//
-//            @Override
-//            public void onViewDetachedFromWindow(View view) {
-//                Log.d("TAG", "onViewDetachedFromWindow: ");
-//                view.animate().translationX(-300).setDuration(2000);
-//            }
-//        });
         beautyToast.show();
 
 
