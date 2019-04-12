@@ -102,8 +102,12 @@ public class MainActivity extends AppCompatActivity {
         beautyToast.setAnimationIn(AnimationUtil.ANIMATION_IN_TRANSLATION_LEFT);
 //        beautyToast.setAnimationIn(AnimationUtil.ANIMATION_IN_TRANSLATION_TOP);
 //        beautyToast.setAnimationIn(AnimationUtil.ANIMATION_IN_TRANSLATION_RIGHT);
-//        beautyToast.setAnimationIn(AnimationUtil.ANIMATION_TRANSLATION_BOTTOM);
-//        beautyToast.setAnimationIn(AnimationUtil.NO_ANIMATION);
+//        beautyToast.setAnimationIn(AnimationUtil.ANIMATION_IN_TRANSLATION_BOTTOM);
+        beautyToast.setAnimationOut(AnimationUtil.ANIMATION_OUT_TRANSLATION_LEFT);
+//        beautyToast.setAnimationOut(AnimationUtil.ANIMATION_OUT_TRANSLATION_TOP);
+//        beautyToast.setAnimationOut(AnimationUtil.ANIMATION_OUT_TRANSLATION_RIGHT);
+//        beautyToast.setAnimationOut(AnimationUtil.ANIMATION_OUT_TRANSLATION_BOTTOM);
+//        beautyToast.setAnimationOut(AnimationUtil.NO_ANIMATION);
 //        beautyToast.show();
 
         //////////////////////////////////////////////////////

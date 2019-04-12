@@ -1,5 +1,7 @@
 package cc.brainbook.android.beautytoast;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -14,12 +16,15 @@ import android.widget.ImageView;
 
 import cc.brainbook.android.beautytoast.util.AnimationUtil;
 
+import static cc.brainbook.android.beautytoast.BuildConfig.DEBUG;
+
 public class BeautyToast extends ToastBase {
     private static final String TAG = "TAG";
 
     public static float HALF_HEIGHT_CORNER_RADIUS = -0.5f;  ///0：没有弧度；-0.5：高度的1/2；0+：像素
 
-    public static final long DEFAULT_ANIMATION_DURATION = 800L;
+    public static final long DEFAULT_ANIMATION_IN_DURATION = 800L;  ///毫秒
+    public static final long DEFAULT_ANIMATION_OUT_DURATION = 800L;  ///毫秒
 
 
     /**
@@ -223,15 +228,13 @@ public class BeautyToast extends ToastBase {
         return this;
     }
 
-    ///view: Animation
-    private long mAnimationDuration = DEFAULT_ANIMATION_DURATION;
-    public ToastBase setAnimationDuration(long animationDuration) {
-        mAnimationDuration = animationDuration;
+    ///view: AnimationIn 入场动画
+    private long mAnimationInDuration = DEFAULT_ANIMATION_IN_DURATION;
+    public ToastBase setAnimationInDuration(long animationInDuration) {
+        mAnimationInDuration = animationInDuration;
 
         return this;
     }
-
-    ///view: AnimationIn 入场动画
     private View.OnLayoutChangeListener mOnLayoutChangeListener;
     public ToastBase setAnimationIn(final int animationInMode) {
         final View view = getView();
@@ -248,7 +251,7 @@ public class BeautyToast extends ToastBase {
                     ///根据动画方式获取ObjectAnimator对象
                     final ObjectAnimator animator = AnimationUtil.getAnimatorByMode(animationInMode, view, width, height);
                     if (animator != null) {
-                        animator.setDuration(mAnimationDuration);
+                        animator.setDuration(mAnimationInDuration);
                         animator.start();
                     }
                 }
@@ -262,6 +265,51 @@ public class BeautyToast extends ToastBase {
 
         return this;
     }
+
+    ///view: AnimationOut 出场动画
+    private long mAnimationOutDuration = DEFAULT_ANIMATION_OUT_DURATION;
+    public ToastBase setAnimationOutDuration(long animationOutDuration) {
+        mAnimationOutDuration = animationOutDuration;
+
+        return this;
+    }
+    private int mAnimationOutMode;
+    public ToastBase setAnimationOut(final int animationOutMode) {
+        mAnimationOutMode = animationOutMode;
+
+        return this;
+    }
     /* ---------------- 动态方法 ---------------- */
+
+    @Override
+    protected void handleCancel() {
+        if (DEBUG) Log.d(TAG, "BeautyToast# handleCancel()# ");
+
+        ///view: AnimationOut 出场动画
+        if (mAnimationOutMode != AnimationUtil.NO_ANIMATION) {
+            final View view = getView();
+            final int width = view.getMeasuredWidth();
+            final int height = view.getMeasuredHeight();
+
+            ///根据动画方式获取ObjectAnimator对象
+            final ObjectAnimator animator = AnimationUtil.getAnimatorByMode(mAnimationOutMode, view, width, height);
+            if (animator != null) {
+                animator.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+
+                        ///出场动画后再执行Toast的cancel
+                        BeautyToast.super.handleCancel();
+                    }
+                });
+                animator.setDuration(mAnimationOutDuration);
+                animator.start();
+            }
+        } else {
+            ///执行Toast的cancel
+            BeautyToast.super.handleCancel();
+        }
+    }
 
 }

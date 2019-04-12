@@ -8,10 +8,16 @@ public class AnimationUtil {
      * 动画方式
      */
     public static final int NO_ANIMATION = 0;
+    ///入场
     public static final int ANIMATION_IN_TRANSLATION_LEFT = 1;
     public static final int ANIMATION_IN_TRANSLATION_TOP = 2;
     public static final int ANIMATION_IN_TRANSLATION_RIGHT = 3;
     public static final int ANIMATION_IN_TRANSLATION_BOTTOM = 4;
+    ///出场
+    public static final int ANIMATION_OUT_TRANSLATION_LEFT = -1;
+    public static final int ANIMATION_OUT_TRANSLATION_TOP = -2;
+    public static final int ANIMATION_OUT_TRANSLATION_RIGHT = -3;
+    public static final int ANIMATION_OUT_TRANSLATION_BOTTOM = -4;
 
     /**
      * 根据动画方式获取ObjectAnimator对象
@@ -40,6 +46,22 @@ public class AnimationUtil {
                 break;
             case ANIMATION_IN_TRANSLATION_BOTTOM:
                 animator = ObjectAnimator.ofFloat(view, "translationY", height, 0);
+
+                break;
+            case ANIMATION_OUT_TRANSLATION_LEFT:
+                animator = ObjectAnimator.ofFloat(view, "translationX", 0, -width);
+
+                break;
+            case ANIMATION_OUT_TRANSLATION_TOP:
+                animator = ObjectAnimator.ofFloat(view, "translationY", 0, -height);
+
+                break;
+            case ANIMATION_OUT_TRANSLATION_RIGHT:
+                animator = ObjectAnimator.ofFloat(view, "translationX", 0, width);
+
+                break;
+            case ANIMATION_OUT_TRANSLATION_BOTTOM:
+                animator = ObjectAnimator.ofFloat(view, "translationY", 0, height);
 
                 break;
             default:
