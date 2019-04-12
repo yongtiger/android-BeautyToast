@@ -13,7 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import cc.brainbook.android.beautytoast.util.CountDownTimer;
-import cc.brainbook.android.beautytoast.util.Util;
+import cc.brainbook.android.beautytoast.util.ToastUtil;
 
 import static cc.brainbook.android.beautytoast.BuildConfig.DEBUG;
 
@@ -61,7 +61,7 @@ public class ToastBase extends AbstractToastBase {
         ///[FIX#Duration可随意选择:API25+失效]只能等上一个Toast快结束时（约974毫秒）再次show！
         long countDownInterval;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
-            countDownInterval = LENGTH_LONG - 950;    ///注意：实测大于974肯定失效！
+            countDownInterval = LENGTH_LONG - 950;    ///注意：实测大于974肯定失效！///???????????
         } else{
             countDownInterval = LENGTH_SHORT;
         }
@@ -72,10 +72,10 @@ public class ToastBase extends AbstractToastBase {
                 if (DEBUG) Log.d(TAG, "ToastBase# handleShow()# CountDownTimer.onTick()# millisUntilFinished: " + millisUntilFinished);
 
                 ///[FIX BUG#关闭通知权限后Toast无法显示]
-                if(Util.isNotificationEnabled(mContext)){
+                if(ToastUtil.isNotificationEnabled(mContext)){
                     mToast.show();
                 }else{
-                    Util.showSystemToast(mToast);
+                    ToastUtil.showSystemToast(mToast);
                 }
             }
 

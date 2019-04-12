@@ -1,5 +1,6 @@
 package cc.brainbook.android.beautytoast;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
@@ -10,10 +11,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 
+import cc.brainbook.android.beautytoast.util.AnimationUtil;
+
 public class BeautyToast extends ToastBase {
     private static final String TAG = "TAG";
 
     public static float HALF_HEIGHT_CORNER_RADIUS = -0.5f;  ///0：没有弧度；-0.5：高度的1/2；0+：像素
+
+    public static final long DEFAULT_ANIMATION_DURATION = 800L;
+
 
     /**
      * Make a standard toast that just contains a text view.
@@ -39,8 +45,6 @@ public class BeautyToast extends ToastBase {
 
         ///设置圆角弧度
         beautyToast.setGradientDrawableCornerRadius(HALF_HEIGHT_CORNER_RADIUS);
-//        beautyToast.setGradientDrawableCornerRadius(HALF_HEIGHT_CORNER_RADIUS / 4); ///test
-//        beautyToast.setGradientDrawableCornerRadius(10);    ///test
 
         return beautyToast;
     }
@@ -166,7 +170,7 @@ public class BeautyToast extends ToastBase {
         return this;
     }
 
-    ///GradientDrawable: Color颜色
+    ///view: GradientDrawable background: Color颜色
     public ToastBase setGradientDrawableColor(@ColorInt int color) {
         final View view = getView();
         final Drawable background = view.getBackground();
@@ -179,7 +183,7 @@ public class BeautyToast extends ToastBase {
         return this;
     }
 
-    ///GradientDrawable: Stroke边框
+    ///view: GradientDrawable background: Stroke边框
     public ToastBase setGradientDrawableStroke(int width, @ColorInt int color) {
         final View view = getView();
         final Drawable background = view.getBackground();
@@ -192,7 +196,7 @@ public class BeautyToast extends ToastBase {
         return this;
     }
 
-    ///GradientDrawable: cornerRadius圆角弧度
+    ///view: GradientDrawable background: cornerRadius圆角弧度
     /**
      *
      * @param cornerRadius  0：没有弧度；-0.5：高度的1/2；0+：像素
@@ -213,6 +217,45 @@ public class BeautyToast extends ToastBase {
             }
         } else {
             throw new RuntimeException("GradientDrawable is expected");
+        }
+
+        return this;
+    }
+
+    ///view: Animation
+    private long mAnimationDuration = DEFAULT_ANIMATION_DURATION;
+    public ToastBase setAnimationDuration(long animationDuration) {
+        mAnimationDuration = animationDuration;
+
+        return this;
+    }
+
+    private View.OnLayoutChangeListener mOnLayoutChangeListener;
+    public ToastBase setAnimation(final int animationMode) {
+        final View view = getView();
+
+        if (animationMode != AnimationUtil.NO_ANIMATION) {
+            mOnLayoutChangeListener = new View.OnLayoutChangeListener() {
+                @Override
+                public void onLayoutChange(View view, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                    view.removeOnLayoutChangeListener(this);
+
+                    final int width = view.getMeasuredWidth();
+                    final int height = view.getMeasuredHeight();
+
+                    ///根据动画方式获取ObjectAnimator对象
+                    ObjectAnimator animator = AnimationUtil.getAnimatorByMode(animationMode, view, width, height);
+
+                    animator.setDuration(mAnimationDuration);
+                    animator.start();
+                }
+            };
+
+            view.addOnLayoutChangeListener(mOnLayoutChangeListener);
+
+        } else if (mOnLayoutChangeListener != null) {
+//            view.addOnLayoutChangeListener(null);///????????
+            view.removeOnLayoutChangeListener(mOnLayoutChangeListener);
         }
 
         return this;

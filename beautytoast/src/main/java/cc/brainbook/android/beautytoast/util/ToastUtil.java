@@ -1,11 +1,7 @@
 package cc.brainbook.android.beautytoast.util;
 
 import android.content.Context;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.GradientDrawable;
-import android.os.Build;
 import android.support.v4.app.NotificationManagerCompat;
-import android.view.View;
 import android.widget.Toast;
 
 import java.lang.reflect.Field;
@@ -13,7 +9,7 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
-public class Util {
+public class ToastUtil {
 
     ///[FIX BUG#关闭通知权限后Toast无法显示]
     /**
