@@ -31,7 +31,8 @@ public abstract class AbstractToastBase {
     /**
      * Toast队列
      */
-    ///Note: LinkedList is implemented as a double linked list. Its performance on add and remove is better than Arraylist, but worse on get and set methods.
+    ///Note: LinkedList is implemented as a double linked list. Its performance on add and remove is better than Arraylist,
+    // but worse on get and set methods.
     ///https://dzone.com/articles/arraylist-vs-linkedlist-vs
     ///https://blog.csdn.net/u012926924/article/details/47955035
     private static final LinkedList<AbstractToastBase> TOAST_LIST = new LinkedList<>();

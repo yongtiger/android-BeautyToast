@@ -62,7 +62,8 @@ public class ToastBase extends AbstractToastBase {
         ///[FIX#Duration可随意选择:API25+失效]只能等上一个Toast快结束时（约974毫秒）再次show！
         long countDownInterval;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
-            countDownInterval = LENGTH_LONG - 950;    ///注意：实测大于974肯定失效！///???????????
+            ///注意：实测大于974肯定失效！///???????????[BUG#只能等上一个Toast快结束时（约974毫秒）再次show！有短暂闪烁！]
+            countDownInterval = LENGTH_LONG - 950;
         } else{
             countDownInterval = LENGTH_SHORT;
         }
@@ -271,7 +272,7 @@ public class ToastBase extends AbstractToastBase {
     }
 
     ///LayoutFullScreen
-    private boolean isLayoutFullScreen = false;
+    protected boolean isLayoutFullScreen = false;
     public boolean isLayoutFullScreen() {
         return isLayoutFullScreen;
     }

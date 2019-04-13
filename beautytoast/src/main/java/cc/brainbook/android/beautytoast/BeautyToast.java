@@ -11,13 +11,15 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 
+import java.lang.ref.WeakReference;
+
 import cc.brainbook.android.beautytoast.util.AnimationUtil;
+import cc.brainbook.android.beautytoast.util.ToastUtil;
 
 import static cc.brainbook.android.beautytoast.BuildConfig.DEBUG;
 
@@ -51,8 +53,14 @@ public class BeautyToast extends ToastBase {
 
         beautyToast.setDuration(duration);
 
+        ///设置颜色
+        beautyToast.setGradientDrawableColor(context.getResources().getColor(R.color.colorBeautyToastBackground));
+
         ///设置圆角弧度
         beautyToast.setGradientDrawableCornerRadius(HALF_HEIGHT_CORNER_RADIUS);
+
+        ///设置显示图标
+        beautyToast.isShowIcon(false);
 
         return beautyToast;
     }
@@ -246,7 +254,8 @@ public class BeautyToast extends ToastBase {
         if (animationInMode != AnimationUtil.NO_ANIMATION) {
             mOnLayoutChangeListener = new View.OnLayoutChangeListener() {
                 @Override
-                public void onLayoutChange(View view, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                public void onLayoutChange(View view, int left, int top, int right, int bottom,
+                                           int oldLeft, int oldTop, int oldRight, int oldBottom) {
                     view.removeOnLayoutChangeListener(this);
 
                     final int width = view.getMeasuredWidth();
@@ -335,39 +344,72 @@ public class BeautyToast extends ToastBase {
     }
 
     ///target
-    private View mTarget;
+    private WeakReference<View> mTarget;    ///避免Activity关闭后造成的内存泄漏！
     public View getTarget() {
-        return mTarget;
+        return mTarget.get();
     }
     public ToastBase setTarget(View view) {
-        mTarget = view;
+        if (view == null) {
+            mTarget = null;
 
-        if (mTarget != null) {
-            mTarget.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                @Override
-                public void onGlobalLayout() {
-                    if (DEBUG) Log.d(TAG, "onGlobalLayout()# mTarget: " + mTarget.getWidth() + ", " + mTarget.getHeight());
-
-                    if (Build.VERSION.SDK_INT >= 16) {
-                        mTarget.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                    }else {
-                        mTarget.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                    }
-
-                    final int[] targetLocation = new int[2];
-//                    mTarget.getLocationInWindow(targetLocation);
-                    mTarget.getLocationOnScreen(targetLocation);
-                    int x = targetLocation[0];
-//                    int x = targetLocation[0] - getView().getMeasuredWidth() + getXOffset();
-                    int y = targetLocation[1];
-//                    int y = targetLocation[1] + getYOffset();
-
-                    setGravity(Gravity.TOP | Gravity.LEFT, 0, 0);
-//                    setGravity(Gravity.TOP | Gravity.LEFT, x, y);
-                }
-            });
+            return this;
         }
+
+        mTarget = new WeakReference<>(view);
+
+        getTarget().getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                    getTarget().getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                }else {
+                    getTarget().getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                }
+
+                ///在Target旁边显示Toast
+                ToastUtil.setGravityByTarget(mContext, BeautyToast.this, isLayoutFullScreen,
+                        getTarget(), mTargetGravity, mTargetOffsetX,mTargetOffsetY);
+            }
+        });
+
+        ///在Target旁边显示Toast
+        ToastUtil.setGravityByTarget(mContext, BeautyToast.this, isLayoutFullScreen,
+                getTarget(), mTargetGravity, mTargetOffsetX,mTargetOffsetY);
 
         return this;
     }
+
+    ///target: OffsetX, OffsetY
+    private int mTargetOffsetX;
+    public int getmTargetOffsetX() {
+        return mTargetOffsetX;
+    }
+    public ToastBase setmTargetOffsetX(int targetOffsetX) {
+        this.mTargetOffsetX = targetOffsetX;
+
+        return this;
+    }
+    private int mTargetOffsetY;
+    public int getmTargetOffsetY() {
+        return mTargetOffsetY;
+    }
+
+    public ToastBase setmTargetOffsetY(int targetOffsetY) {
+        this.mTargetOffsetY = targetOffsetY;
+
+        return this;
+    }
+
+    ///target: mTargetGravity
+    private int mTargetGravity = ToastUtil.GRAVITY_TO_LEFT_OF_TARGET;
+
+    public int getTargetGravity() {
+        return mTargetGravity;
+    }
+    public ToastBase setTargetGravity(final int targetGravity) {
+        mTargetGravity = targetGravity;
+
+        return this;
+    }
+
 }

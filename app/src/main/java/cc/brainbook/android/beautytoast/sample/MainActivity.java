@@ -1,16 +1,15 @@
 package cc.brainbook.android.beautytoast.sample;
 
-import android.os.Build;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
+import android.widget.Toast;
 
 import cc.brainbook.android.beautytoast.BeautyToast;
-import cc.brainbook.android.beautytoast.util.AnimationUtil;
+import cc.brainbook.android.beautytoast.util.ToastUtil;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,29 +20,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         Log.d("TAG", "onCreate()# ");
 
-//        //无title
-//        requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        //全屏
-//        getWindow().setFlags(WindowManager.LayoutParams. FLAG_FULLSCREEN ,
-//                WindowManager.LayoutParams. FLAG_FULLSCREEN);
-//        ///沉浸式
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-//            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-//        }
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        int statusBarHeight1 = -1;
-        //获取status_bar_height资源的ID
-        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
-        if (resourceId > 0) {
-            //根据资源ID获取响应的尺寸值
-            statusBarHeight1 = getResources().getDimensionPixelSize(resourceId);
-        }
-        Log.e("WangJ", "状态栏-方法1:" + statusBarHeight1);
-
-
 
 
 //        /* ========================= 参考对比原生Toast ========================= */
@@ -57,8 +35,8 @@ public class MainActivity extends AppCompatActivity {
         /* -------------------- makeText -------------------- */
 ////        ToastBase toastBase = ToastBase.makeText(getApplicationContext(),"ToastBase!", ToastBase.LENGTH_SHORT);
 ////        ToastBase toastBase = ToastBase.makeText(getApplicationContext(),"ToastBase!", ToastBase.LENGTH_LONG);
-////        ToastBase toastBase = ToastBase.makeText(getApplicationContext(),"ToastBase!", 15000);
-//        ToastBase toastBase = ToastBase.makeText(this,"ToastBase!", 15000);   ///测试销毁时是否内存泄漏
+//        ToastBase toastBase = ToastBase.makeText(getApplicationContext(),"ToastBase!", 15000);
+////        ToastBase toastBase = ToastBase.makeText(this,"ToastBase!", 15000);   ///测试销毁时是否内存泄漏
 //
 ////        toastBase.setText("ToastBase!!");
 ////        toastBase.setGravity(Gravity.TOP | Gravity.RIGHT, 50, 50);
@@ -86,8 +64,8 @@ public class MainActivity extends AppCompatActivity {
         /* ========================= BeautyToast ========================= */
 
         /* -------------------- makeText -------------------- */
-//        BeautyToast beautyToast = BeautyToast.makeText(getApplicationContext(),"BeautyToast!", BeautyToast.LENGTH_SHORT);
-        BeautyToast beautyToast = BeautyToast.makeText(getApplicationContext(),"BeautyToast!", BeautyToast.LENGTH_LONG);
+        BeautyToast beautyToast = BeautyToast.makeText(getApplicationContext(),"BeautyToast!", BeautyToast.LENGTH_SHORT);
+//        BeautyToast beautyToast = BeautyToast.makeText(getApplicationContext(),"BeautyToast!", BeautyToast.LENGTH_LONG);
 //        BeautyToast beautyToast = BeautyToast.makeText(getApplicationContext(),"BeautyToast!", 15000);
 //        BeautyToast beautyToast = BeautyToast.makeText(this,"ToastBase!", 15000);   ///测试销毁时是否内存泄漏
 
@@ -146,12 +124,18 @@ public class MainActivity extends AppCompatActivity {
 
 //        beautyToast.show();
 
-        ////////////////////////////////////////////////////////////
+        /* -------------------- target -------------------- */
         target = findViewById(R.id.target);
         target1 = findViewById(R.id.target1);
 
-        beautyToast.isGravityFullScreen(true);
-        beautyToast.setTarget(target);
+//        beautyToast.isGravityFullScreen(true);
+
+//        beautyToast.setTargetGravity(ToastUtil.GRAVITY_TO_LEFT_OF_TARGET);
+//        beautyToast.setTargetGravity(ToastUtil.GRAVITY_ABOVE_TARGET);
+//        beautyToast.setTargetGravity(ToastUtil.GRAVITY_TO_RIGHT_OF_TARGET);
+        beautyToast.setTargetGravity(ToastUtil.GRAVITY_BELOW_TARGET);
+
+        beautyToast.setTarget(target1);
         beautyToast.show();
     }
 
@@ -184,15 +168,71 @@ public class MainActivity extends AppCompatActivity {
         Log.d("TAG", "onDestroy: ");
         super.onDestroy();
 
-        ///注意：当Context（如Activity/Fragment等）销毁时必须调用此方法，避免内存泄漏！
+//        ///注意：当Context（如Activity/Fragment等）销毁时必须调用此方法，避免内存泄漏！
 //        ToastBase.clear(this);
     }
 
     public void btn1Click(View view) {
-        BeautyToast beautyToast = BeautyToast.makeText(getApplicationContext(),"BeautyToast!", BeautyToast.LENGTH_LONG);
-        beautyToast.getView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);//设置Toast可以布局到系统状态栏的下面
-//        beautyToast.setTarget(target);
-        beautyToast.setGravity(Gravity.TOP | Gravity.LEFT, -50, -50);
-        beautyToast.show();
+//        BeautyToast beautyToast = BeautyToast.makeText(getApplicationContext(),"BeautyToast! target1", BeautyToast.LENGTH_LONG);
+////        beautyToast.setTarget(target1);
+//        beautyToast.show();
+
+//        displayToastAboveButton(target);
+
+
+//        int offsetY = getResources().getDimensionPixelSize(R.dimen.toast_offset_y);
+//        Toast toast = Toast.makeText(MainActivity.this, "That number is greater than 100. Not Valid!", Toast.LENGTH_SHORT);
+//        positionToast(toast, target, getWindow(), 0, 0);
+//        toast.show();
     }
+
+    // v is the Button view that you want the Toast to appear above
+// and messageId is the id of your string resource for the message
+
+    private void displayToastAboveButton(View v)
+    {
+        int xOffset = 0;
+        int yOffset = 0;
+        Rect gvr = new Rect();
+
+        View parent = (View) v.getParent();
+        int parentHeight = parent.getHeight();
+
+        if (v.getGlobalVisibleRect(gvr))
+        {
+            View root = v.getRootView();
+
+            int halfWidth = root.getRight() / 2;
+            int halfHeight = root.getBottom() / 2;
+
+            int parentCenterX = ((gvr.right - gvr.left) / 2) + gvr.left;
+
+            int parentCenterY = ((gvr.bottom - gvr.top) / 2) + gvr.top;
+
+            if (parentCenterY <= halfHeight)
+            {
+                yOffset = -(halfHeight - parentCenterY) - parentHeight;
+            }
+            else
+            {
+                yOffset = (parentCenterY - halfHeight) - parentHeight;
+            }
+
+            if (parentCenterX < halfWidth)
+            {
+                xOffset = -(halfWidth - parentCenterX);
+            }
+
+            if (parentCenterX >= halfWidth)
+            {
+                xOffset = parentCenterX - halfWidth;
+            }
+        }
+
+        Toast toast = Toast.makeText(this, "ttttttttttttt", Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.CENTER, xOffset, yOffset);
+        toast.show();
+    }
+
+
 }
