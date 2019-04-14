@@ -176,63 +176,6 @@ public class MainActivity extends AppCompatActivity {
 //        BeautyToast beautyToast = BeautyToast.makeText(getApplicationContext(),"BeautyToast! target1", BeautyToast.LENGTH_LONG);
 ////        beautyToast.setTarget(target1);
 //        beautyToast.show();
-
-//        displayToastAboveButton(target);
-
-
-//        int offsetY = getResources().getDimensionPixelSize(R.dimen.toast_offset_y);
-//        Toast toast = Toast.makeText(MainActivity.this, "That number is greater than 100. Not Valid!", Toast.LENGTH_SHORT);
-//        positionToast(toast, target, getWindow(), 0, 0);
-//        toast.show();
     }
-
-    // v is the Button view that you want the Toast to appear above
-// and messageId is the id of your string resource for the message
-
-    private void displayToastAboveButton(View v)
-    {
-        int xOffset = 0;
-        int yOffset = 0;
-        Rect gvr = new Rect();
-
-        View parent = (View) v.getParent();
-        int parentHeight = parent.getHeight();
-
-        if (v.getGlobalVisibleRect(gvr))
-        {
-            View root = v.getRootView();
-
-            int halfWidth = root.getRight() / 2;
-            int halfHeight = root.getBottom() / 2;
-
-            int parentCenterX = ((gvr.right - gvr.left) / 2) + gvr.left;
-
-            int parentCenterY = ((gvr.bottom - gvr.top) / 2) + gvr.top;
-
-            if (parentCenterY <= halfHeight)
-            {
-                yOffset = -(halfHeight - parentCenterY) - parentHeight;
-            }
-            else
-            {
-                yOffset = (parentCenterY - halfHeight) - parentHeight;
-            }
-
-            if (parentCenterX < halfWidth)
-            {
-                xOffset = -(halfWidth - parentCenterX);
-            }
-
-            if (parentCenterX >= halfWidth)
-            {
-                xOffset = parentCenterX - halfWidth;
-            }
-        }
-
-        Toast toast = Toast.makeText(this, "ttttttttttttt", Toast.LENGTH_LONG);
-        toast.setGravity(Gravity.CENTER, xOffset, yOffset);
-        toast.show();
-    }
-
 
 }

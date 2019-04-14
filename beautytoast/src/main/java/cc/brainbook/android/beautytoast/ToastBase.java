@@ -208,10 +208,10 @@ public class ToastBase extends AbstractToastBase {
     }
 
     ///margin
-    public float getmHorizontalMargin() {
+    public float getHorizontalMargin() {
         return mToast.getHorizontalMargin();
     }
-    public float getmVerticalMargin() {
+    public float getVerticalMargin() {
         return mToast.getVerticalMargin();
     }
     public ToastBase setMargin(float horizontalMargin, float verticalMargin) {

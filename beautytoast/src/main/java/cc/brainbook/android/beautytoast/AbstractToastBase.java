@@ -25,7 +25,7 @@ public abstract class AbstractToastBase {
      * MainThreadHandler
      */
     private static final int SHOW = 0;
-    private static final int CANCEL = 1;
+//    private static final int CANCEL = 1;
     private static Handler sMainThreadHandler = new MainThreadHandler();
 
     /**
@@ -97,17 +97,17 @@ public abstract class AbstractToastBase {
 
                     break;
                 }
-                case CANCEL: {
-                    abstractToastBase.handleCancel();
-
-                    synchronized (TOAST_LIST) {
-                        ///清空正在显示的Toast
-                        sCurrentShowingToast = null;
-
-                        TOAST_LIST.notifyAll();
-                    }
-                    break;
-                }
+//                case CANCEL: {
+//                    abstractToastBase.handleCancel();
+//
+//                    synchronized (TOAST_LIST) {
+//                        ///清空正在显示的Toast
+//                        sCurrentShowingToast = null;
+//
+//                        TOAST_LIST.notifyAll();
+//                    }
+//                    break;
+//                }
             }
         }
     }
@@ -170,8 +170,18 @@ public abstract class AbstractToastBase {
         remove(context);
 
         if (sCurrentShowingToast != null && context.getClass().toString().equals(sCurrentShowingToast.mClassName)) {
-            ///发送消息：取消Toast
-            sMainThreadHandler.obtainMessage(CANCEL, sCurrentShowingToast).sendToTarget();
+            ///[FIX#ToastyBase窗体泄漏]改用同步发送取消Toast消息（异步取消容易引起窗体泄漏）
+//            ///发送消息：取消Toast
+//            sMainThreadHandler.obtainMessage(CANCEL, sCurrentShowingToast).sendToTarget();
+
+            sCurrentShowingToast.handleCancel();
+
+            synchronized (TOAST_LIST) {
+                ///清空正在显示的Toast
+                sCurrentShowingToast = null;
+
+                TOAST_LIST.notifyAll();
+            }
         }
 
     }
@@ -234,8 +244,18 @@ public abstract class AbstractToastBase {
     public void cancel() {
         if (DEBUG) Log.d(TAG, "cancel()# ");
 
-        ///发送消息：取消Toast
-        sMainThreadHandler.obtainMessage(CANCEL, this).sendToTarget();
+        ///[FIX#ToastyBase窗体泄漏]改用同步发送取消Toast消息（异步取消容易引起窗体泄漏）
+//        ///发送消息：取消Toast
+//        sMainThreadHandler.obtainMessage(CANCEL, this).sendToTarget();
+
+        handleCancel();
+
+        synchronized (TOAST_LIST) {
+            ///清空正在显示的Toast
+            sCurrentShowingToast = null;
+
+            TOAST_LIST.notifyAll();
+        }
     }
 
     /**

@@ -1,6 +1,7 @@
 package cc.brainbook.android.beautytoast.util;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.support.v4.app.NotificationManagerCompat;
 import android.view.Gravity;
 import android.view.View;
@@ -148,6 +149,17 @@ public class ToastUtil {
     }
 
     /**
+     * 获取系统Toast的Y坐标偏移量
+     *
+     * @param context
+     * @return
+     */
+    public static int getToastOffsetY(Context context) {
+        int i = Resources.getSystem().getIdentifier("toast_y_offset", "dimen", "android");
+        return context.getResources().getDimensionPixelSize(i);
+    }
+
+    /**
      * 获取系统状态栏高度
      *
      * 注意：即使全屏模式，系统状态栏高度也存在！系统资源属性是固定的，无论是否隐藏或者全屏显示
@@ -157,7 +169,6 @@ public class ToastUtil {
      * @return  -1：代表未获取成功
      */
     public static int getStatusBarHeight(Context context) {
-
         int statusBarHeight = -1;
 
         //获取status_bar_height资源的ID
