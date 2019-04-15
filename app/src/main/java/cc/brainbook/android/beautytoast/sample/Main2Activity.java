@@ -178,8 +178,8 @@ public class Main2Activity extends AppCompatActivity {
 
     private ToastyBase toastyBase;
     public void btn1Click(View view) {
-//        ToastyBase toastyBase = ToastyBase.makeText(getApplicationContext(),"ToastyBase!", 3500);///?????????android.view.WindowManager$BadTokenException: Unable to add window -- token null is not valid; is your activity running?
-        toastyBase = ToastyBase.makeText(this,"ToastyBase!", 35000);
+        ToastyBase toastyBase = ToastyBase.makeText(getApplicationContext(),"ToastyBase!", 3500);///需要浮动窗权限！
+//        toastyBase = ToastyBase.makeText(this,"ToastyBase!", 35000);
         toastyBase.show();
 
 //        BeautyToasty beautyToasty = BeautyToasty.makeText(getApplicationContext(),"BeautyToasty! target1", BeautyToasty.LENGTH_LONG);

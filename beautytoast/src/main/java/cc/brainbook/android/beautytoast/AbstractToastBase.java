@@ -174,7 +174,6 @@ public abstract class AbstractToastBase {
             ///同步发送消息：取消Toast
             sMainThreadHandler.handleMessage(sMainThreadHandler.obtainMessage(CANCEL, sCurrentShowingToast));
         }
-
     }
 
     /**

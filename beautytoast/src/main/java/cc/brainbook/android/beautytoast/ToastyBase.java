@@ -19,6 +19,9 @@ import cc.brainbook.android.beautytoast.util.ToastUtil;
 
 import static cc.brainbook.android.beautytoast.BuildConfig.DEBUG;
 
+/**
+ * 注意：Android M 6.0 (API level 23)以上需要动态设置权限
+ */
 public class ToastyBase extends AbstractToastBase {
     private static final String TAG = "TAG";
 
@@ -57,8 +60,14 @@ public class ToastyBase extends AbstractToastBase {
     private WindowManager.LayoutParams getDefaultToastyLayoutParams() {
         final WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
 
-        lp.type = WindowManager.LayoutParams.TYPE_APPLICATION_PANEL;
-//        lp.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;///(API26+)https://blog.csdn.net/qq_23374873/article/details/80718948
+        ///[ToastyBase#WindowManager.LayoutParams.TYPE_SYSTEM_ALERT替换为TYPE_APPLICATION_OVERLAY]
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            ///Android O 8.0 (API level 26)以上版本使用TYPE_APPLICATION_OVERLAY
+            ///https://blog.csdn.net/qq_23374873/article/details/80718948
+            lp.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
+        } else {
+            lp.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
+        }
         lp.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
                 | WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH
                 | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
@@ -87,22 +96,7 @@ public class ToastyBase extends AbstractToastBase {
 
         ///显示Toasty
         final WindowManager windowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
-
-//        mView.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
-//            @Override
-//            public void onViewAttachedToWindow(View v) {
-//                Log.d(TAG, "onViewAttachedToWindow: 11111111111111111111111111111111");
-//            }
-//
-//            @Override
-//            public void onViewDetachedFromWindow(View v) {
-//                Log.d(TAG, "onViewDetachedFromWindow: 0000000000000000000000000000000");
-//                windowManager.removeView(mView);
-//            }
-//        });
-
         windowManager.addView(mView, mToastyLayoutParams);
-//        windowManager.addView(mView.get(), mToastyLayoutParams);
 
         ///延时
         mHandler.postDelayed(mRunnable, calMillisInFuture(mDuration));
@@ -124,19 +118,13 @@ public class ToastyBase extends AbstractToastBase {
     protected void handleCancel() {
         if (DEBUG) Log.d(TAG, "ToastBase# handleCancel()# ");
 
-        ////////////////////////////////////////////////
         if (mView != null) {
             ///取消显示Toasty
             final WindowManager windowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
-//            windowManager.removeView(mView);
             windowManager.removeViewImmediate(mView);   ///[FIX#ToastyBase窗体泄漏]改用windowManager.removeViewImmediate(mView)
-//        windowManager.removeView(mView.get());
-
         }
 
         mHandler.removeCallbacks(mRunnable);
-//        mHandler.removeCallbacksAndMessages(mRunnable);
-
     }
 
 
@@ -182,10 +170,6 @@ public class ToastyBase extends AbstractToastBase {
     ///text view
     protected TextView mTextView;
     public TextView getTextView() {
-        if (mTextView == null) {
-            mTextView = getDefaultTextView();///???????????????????
-        }
-
         return mTextView;
     }
     public TextView getDefaultTextView() {
@@ -278,33 +262,6 @@ public class ToastyBase extends AbstractToastBase {
 
         return this;
     }
-
-//    ///LayoutFullScreen
-//    protected boolean isLayoutFullScreen = false;
-//    public boolean isLayoutFullScreen() {
-//        return isLayoutFullScreen;
-//    }
-//    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-//    /**
-//     * 设置Toast是否为全屏布局
-//     *
-//     * Toast默认Gravity的坐标系不包含状态栏（即非全屏，与BeautyToast中Target产生高度上的错位！）
-//     * 设置为全屏模式后，Gravity的坐标系为全屏，包含了状态栏（与BeautyToast中Target的坐标系保持一致）
-//     *
-//     * 注意：必须API 16+
-//     */
-//    public ToastyBase isGravityFullScreen(boolean isGravityFullScreen) {
-//        this.isLayoutFullScreen = isGravityFullScreen;
-//
-//        final View view = getView();
-//        if (isGravityFullScreen) {
-//            view.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);  ///全局布局
-//        } else {
-//            view.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);    ///恢复正常
-//        }
-//
-//        return this;
-//    }
     /* ---------------- 动态方法 ---------------- */
 
 }

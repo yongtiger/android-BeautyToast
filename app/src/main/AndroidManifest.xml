@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cc.brainbook.android.beautytoast.sample">
 
+    <!-- ///[ToastyBase#WindowManager.LayoutParams.TYPE_SYSTEM_ALERT] -->
+    <!-- 注意：Android M 6.0 (API level 23)以上需要动态设置权限 -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application

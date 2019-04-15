@@ -85,7 +85,7 @@ public class ToastUtil {
 //            }
 //        }
 //
-//        ///////?????????[BUG#Toast.setGravity()在Toast显示中失效！]
+//        ///////?????????[BUG#Toast.setGravity()在Toast显示过程中，无法移动其位置！]
 //        toast.setGravity(Gravity.TOP | Gravity.LEFT, xOffset + offsetX, yOffset + offsetY);
 //    }
     public static void setGravityByTarget(Context context, ToastBase toast, boolean isLayoutFullScreen,
@@ -144,7 +144,7 @@ public class ToastUtil {
             }
         }
 
-        ///////?????????[BUG#Toast.setGravity()在Toast显示中失效！]
+        ///////?????????[BUG#Toast.setGravity()在Toast显示过程中，无法移动其位置！]
         toast.setGravity(Gravity.CENTER, xOffset + offsetX, yOffset + offsetY);
     }
 

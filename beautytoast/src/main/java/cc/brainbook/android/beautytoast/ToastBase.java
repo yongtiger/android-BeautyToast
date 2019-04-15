@@ -145,12 +145,9 @@ public class ToastBase extends AbstractToastBase {
     }
 
     ///view
+    private View mView;
     public View getView() {
-        if (mToast.getView() == null) {
-            mToast.setView(getDefaultView());
-        }
-
-        return mToast.getView();
+        return mView;
     }
     public View getDefaultView() {
         final LayoutInflater layoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -175,10 +172,6 @@ public class ToastBase extends AbstractToastBase {
     ///text view
     protected TextView mTextView;
     public TextView getTextView() {
-        if (mTextView == null) {
-            mTextView = getDefaultTextView();
-        }
-
         return mTextView;
     }
     public TextView getDefaultTextView() {
