@@ -21,7 +21,7 @@ import static cc.brainbook.android.beautytoast.BuildConfig.DEBUG;
 /**
  * 注意：Android M 6.0 (API level 23)以上需要动态设置权限
  */
-public class ToastyBase extends AbstractToastBase {
+public class ToastyBase extends AbstractBase {
     private static final String TAG = "TAG";
 
     /**

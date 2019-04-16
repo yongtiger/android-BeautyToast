@@ -18,7 +18,7 @@ import cc.brainbook.android.beautytoast.util.ToastUtil;
 
 import static cc.brainbook.android.beautytoast.BuildConfig.DEBUG;
 
-public class ToastBase extends AbstractToastBase {
+public class ToastBase extends AbstractBase {
     private static final String TAG = "TAG";
 
     private Toast mToast;

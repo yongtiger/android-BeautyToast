@@ -26,90 +26,44 @@ public class ToastUtil {
     /**
      * 在任意指定View旁边显示Toast
      *
-     * 注意：必须在View执行完布局之后！否则targetLocation为0，导致显示Toast只能在左上角！
+     * 注意：必须在View执行完布局之后！
      *
      * @param context
      * @param toast
+     * @param isLayoutFullScreen
      * @param target
      * @param targetGravity
-     * @param isLayoutFullScreen
+     * @param targetOffsetX
+     * @param targetOffsetY
      */
-//    public static void setGravityByTarget(Context context, ToastBase toast, boolean isLayoutFullScreen,
-//                                          View target, int targetGravity, int offsetX, int offsetY) {
-//        if (toast == null || target == null) {
-//            return;
-//        }
-//
-//        final View toastView = toast.getView();
-//        toastView.measure(0,0);  ///[FIX#使用带icon的BeautyToast时显示错位！]
-//
-//        final int toastWidth = toastView.getMeasuredWidth();
-//        final int toastHeight = toastView.getMeasuredHeight();
-//        final int targetWidth = target.getMeasuredWidth();
-//        final int targetHeight = target.getMeasuredHeight();
-//
-//        ///获得target的坐标
-//        final int[] targetLocation = new int[2];
-//        target.getLocationInWindow(targetLocation);
-//        ///getLocationOnScreen() and getLocationInWindow() normally return the same values.
-//        // This is because the window is normally the same size as the screen.
-//        // However, sometimes the window is smaller than the screen. For example, in a Dialog or a custom system keyboard
-//        ///https://stackoverflow.com/questions/17672891/getlocationonscreen-vs-getlocationinwindow
-//        target.getLocationOnScreen(targetLocation);
-//
-//        int xOffset = targetLocation[0];
-//        int yOffset = targetLocation[1];
-//
-//        switch (targetGravity) {
-//            case GRAVITY_ABOVE_TARGET:
-//                xOffset += (targetWidth - toastWidth) / 2;
-//                yOffset -= toastHeight;
-//
-//                break;
-//            case GRAVITY_TO_RIGHT_OF_TARGET:
-//                xOffset += targetWidth;
-//                yOffset += (targetHeight - toastHeight) / 2;
-//
-//                break;
-//            case GRAVITY_BELOW_TARGET:
-//                xOffset += (targetWidth - toastWidth) / 2;
-//                yOffset += targetHeight;
-//
-//                break;
-//            default:
-//                xOffset -= toastWidth;
-//                yOffset += (targetHeight - toastHeight) / 2;
-//        }
-//
-//        ///Toast非全屏显示时，需要调整setGravity()的yOffset
-//        ///Toast默认Gravity的坐标系不包含状态栏（即非全屏)，与BeautyToast中Target产生高度上的错位！
-//        if (!isLayoutFullScreen) {
-//            final int statusBarHeight = getStatusBarHeight(context);
-//            if (statusBarHeight != -1) {
-//                yOffset -= statusBarHeight;
-//            }
-//        }
-//
-//        ///////?????????[BUG#Toast.setGravity()在Toast显示过程中，无法移动其位置！]
-//        toast.setGravity(Gravity.TOP | Gravity.LEFT, xOffset + offsetX, yOffset + offsetY);
-//    }
     public static void setGravityByTarget(Context context, ToastBase toast, boolean isLayoutFullScreen,
-                                          View target, int targetGravity, int offsetX, int offsetY) {
+                                          View target, int targetGravity, int targetOffsetX, int targetOffsetY) {
         if (toast == null || target == null) {
             return;
         }
 
-        ///获得屏幕宽高
-        final int screenWidth= context.getResources().getDisplayMetrics().widthPixels;
-        final int screenHeight= context.getResources().getDisplayMetrics().heightPixels;
+        final int[] toastLocation = calToastLocation(context, toast.getView(), target, targetGravity, isLayoutFullScreen, targetOffsetX, targetOffsetY);
 
-        final View toastView = toast.getView();
+        ///////?????????[BUG#Toast.setGravity()在Toast显示过程中，无法移动其位置！]
+        toast.setGravity(Gravity.CENTER, toastLocation[0], toastLocation[1]);
+    }
+    public static void setGravityByTarget(Context context, ToastyBase toast, boolean isLayoutFullScreen,
+                                          View target, int targetGravity, int targetOffsetX, int targetOffsetY) {
+        if (toast == null || target == null) {
+            return;
+        }
+
+        final int[] toastLocation = calToastLocation(context, toast.getView(), target, targetGravity, isLayoutFullScreen, targetOffsetX, targetOffsetY);
+
+        toast.setGravity(Gravity.CENTER, toastLocation[0], toastLocation[1]);
+    }
+    private static int[] calToastLocation(Context context, View toastView, View target, int targetGravity, boolean isLayoutFullScreen,
+                            int targetOffsetX, int targetOffsetY) {
         toastView.measure(0,0);  ///[FIX#使用带icon的BeautyToast时显示错位！]
 
         final int toastHalfWidth = toastView.getMeasuredWidth() / 2;
         final int toastHalfHeight = toastView.getMeasuredHeight() / 2;
 
-//        target.measure(0,0);  ///[FIX#使用带icon的BeautyToast时显示错位！]
         final int targetHalfWidth = target.getMeasuredWidth() / 2;
         final int targetHalfHeight = target.getMeasuredHeight() / 2;
 
@@ -125,100 +79,44 @@ public class ToastUtil {
         final int targetCenterX = targetLocation[0] + targetHalfWidth;
         final int targetCenterY = targetLocation[1] + targetHalfHeight;
 
-
-        int xOffset = targetCenterX - screenWidth / 2;
-        int yOffset = targetCenterY - screenHeight / 2;
-
-        switch (targetGravity) {
-            case GRAVITY_ABOVE_TARGET:
-                yOffset -= toastHalfHeight + targetHalfHeight;
-
-                break;
-            case GRAVITY_TO_RIGHT_OF_TARGET:
-                xOffset += toastHalfWidth + targetHalfWidth;
-
-                break;
-            case GRAVITY_BELOW_TARGET:
-                yOffset += toastHalfHeight + targetHalfHeight;
-
-                break;
-            default:
-                xOffset -= toastHalfWidth + targetHalfWidth;
-        }
-
-        ///Toast非全屏显示时，需要调整setGravity()的yOffset
-        ///Toast默认Gravity的坐标系不包含状态栏（即非全屏)，与BeautyToast中Target产生高度上的错位！
-        if (!isLayoutFullScreen) {
-            final int statusBarHeight = getStatusBarHeight(context);
-            if (statusBarHeight != -1) {
-                yOffset -= statusBarHeight / 2;
-            }
-        }
-
-        ///////?????????[BUG#Toast.setGravity()在Toast显示过程中，无法移动其位置！]
-        toast.setGravity(Gravity.CENTER, xOffset + offsetX, yOffset + offsetY);
-    }
-    public static void setGravityByTarget(Context context, ToastyBase toast, boolean isLayoutFullScreen,
-                                          View target, int targetGravity, int offsetX, int offsetY) {
-        if (toast == null || target == null) {
-            return;
-        }
-
         ///获得屏幕宽高
         final int screenWidth= context.getResources().getDisplayMetrics().widthPixels;
         final int screenHeight= context.getResources().getDisplayMetrics().heightPixels;
 
-        final View toastView = toast.getView();
-        toastView.measure(0,0);  ///[FIX#使用带icon的BeautyToast时显示错位！]
-        final int toastHalfWidth = toastView.getMeasuredWidth() / 2;
-        final int toastHalfHeight = toastView.getMeasuredHeight() / 2;
-
-//        target.measure(0,0);  ///[FIX#使用带icon的BeautyToast时显示错位！]
-        final int targetHalfWidth = target.getMeasuredWidth() / 2;
-        final int targetHalfHeight = target.getMeasuredHeight() / 2;
-
-        ///获得target的坐标
-        final int[] targetLocation = new int[2];
-//        target.getLocationInWindow(targetLocation);
-        ///getLocationOnScreen() and getLocationInWindow() normally return the same values.
-        // This is because the window is normally the same size as the screen.
-        // However, sometimes the window is smaller than the screen. For example, in a Dialog or a custom system keyboard
-        ///https://stackoverflow.com/questions/17672891/getlocationonscreen-vs-getlocationinwindow
-        target.getLocationOnScreen(targetLocation);
-
-        final int targetCenterX = targetLocation[0] + targetHalfWidth;
-        final int targetCenterY = targetLocation[1] + targetHalfHeight;
-
-        int xOffset = targetCenterX - screenWidth / 2;
-        int yOffset = targetCenterY - screenHeight / 2;
+        final int[] toastLocation = new int[2];
+        toastLocation[0] = targetCenterX - screenWidth / 2;
+        toastLocation[1] = targetCenterY - screenHeight / 2;
 
         switch (targetGravity) {
             case GRAVITY_ABOVE_TARGET:
-                yOffset -= toastHalfHeight + targetHalfHeight;
+                toastLocation[1] -= toastHalfHeight + targetHalfHeight;
 
                 break;
             case GRAVITY_TO_RIGHT_OF_TARGET:
-                xOffset += toastHalfWidth + targetHalfWidth;
+                toastLocation[0] += toastHalfWidth + targetHalfWidth;
 
                 break;
             case GRAVITY_BELOW_TARGET:
-                yOffset += toastHalfHeight + targetHalfHeight;
+                toastLocation[1] += toastHalfHeight + targetHalfHeight;
 
                 break;
             default:
-                xOffset -= toastHalfWidth + targetHalfWidth;
+                toastLocation[0] -= toastHalfWidth + targetHalfWidth;
         }
 
-        ///Toast非全屏显示时，需要调整setGravity()的yOffset
+        ///Toast非全屏显示时，需要调整setGravity()的toastLocation[1]
         ///Toast默认Gravity的坐标系不包含状态栏（即非全屏)，与BeautyToast中Target产生高度上的错位！
         if (!isLayoutFullScreen) {
             final int statusBarHeight = getStatusBarHeight(context);
             if (statusBarHeight != -1) {
-                yOffset -= statusBarHeight / 2;
+                toastLocation[1] -= statusBarHeight / 2;
             }
         }
 
-        toast.setGravity(Gravity.CENTER, xOffset + offsetX, yOffset + offsetY);
+        toastLocation[0] += targetOffsetX;
+        toastLocation[1] += targetOffsetY;
+
+        return toastLocation;
     }
 
     /**

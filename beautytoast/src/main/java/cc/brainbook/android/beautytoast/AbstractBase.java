@@ -12,7 +12,7 @@ import java.util.function.Predicate;
 
 import static cc.brainbook.android.beautytoast.BuildConfig.DEBUG;
 
-public abstract class AbstractToastBase {
+public abstract class AbstractBase {
     private static final String TAG = "TAG";
 
     /**
@@ -35,14 +35,14 @@ public abstract class AbstractToastBase {
     // but worse on get and set methods.
     ///https://dzone.com/articles/arraylist-vs-linkedlist-vs
     ///https://blog.csdn.net/u012926924/article/details/47955035
-    private static final LinkedList<AbstractToastBase> TOAST_LIST = new LinkedList<>();
+    private static final LinkedList<AbstractBase> TOAST_LIST = new LinkedList<>();
 
     /**
      * 正在显示的Toast
      *
      * 注意：当Context（如Activity/Fragment等）销毁时必须调用AbstractToastBase.clear(Context)方法清除，避免内存泄漏！
      */
-    private static AbstractToastBase sCurrentShowingToast;
+    private static AbstractBase sCurrentShowingToast;
 
     /**
      * 是否notify的标志（用volatile修饰符！）
@@ -90,7 +90,7 @@ public abstract class AbstractToastBase {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
 
-            final AbstractToastBase abstractToastBase = (AbstractToastBase) msg.obj;
+            final AbstractBase abstractToastBase = (AbstractBase) msg.obj;
             switch (msg.what) {
                 case SHOW: {
                     abstractToastBase.handleShow();
@@ -124,16 +124,16 @@ public abstract class AbstractToastBase {
     private static void remove(final String className, final String category, final boolean isRemoveAll) {
         synchronized (TOAST_LIST) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                TOAST_LIST.removeIf(new Predicate<AbstractToastBase>() {
+                TOAST_LIST.removeIf(new Predicate<AbstractBase>() {
                     @Override
-                    public boolean test(AbstractToastBase abstractToastBase) {
+                    public boolean test(AbstractBase abstractToastBase) {
                         return className.equals(abstractToastBase.mClassName) &&
                                 (isRemoveAll || category.equals(abstractToastBase.mCategory));
                     }
                 });
             } else {
-                final HashSet<AbstractToastBase> removeSet = new HashSet<>();
-                for (AbstractToastBase abstractToastBase : TOAST_LIST) {
+                final HashSet<AbstractBase> removeSet = new HashSet<>();
+                for (AbstractBase abstractToastBase : TOAST_LIST) {
                     if (className.equals(abstractToastBase.mClassName) &&
                             (isRemoveAll || category.equals(abstractToastBase.mCategory))) {
                         removeSet.add(abstractToastBase);
@@ -186,7 +186,7 @@ public abstract class AbstractToastBase {
      */
     private String mClassName;
 
-    protected AbstractToastBase(Context context) {
+    protected AbstractBase(Context context) {
         mContext = context;
         mClassName = context.getClass().toString();
     }
@@ -195,7 +195,7 @@ public abstract class AbstractToastBase {
      * Toast的类别
      */
     private String mCategory = "";
-    public AbstractToastBase setCategory(String category) {
+    public AbstractBase setCategory(String category) {
         if (category == null) {
             category = "";
         }
