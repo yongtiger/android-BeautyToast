@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -12,8 +12,7 @@
         android:id="@+id/icon"
         android:layout_width="16dp"
         android:layout_height="16dp"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
+        android:layout_gravity="center_vertical"
         android:layout_marginRight="8dp"
         android:visibility="gone" />
 
@@ -21,11 +20,9 @@
         android:id="@+id/message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/icon"
         android:layout_marginTop="12dp"
         android:layout_marginBottom="12dp"
         android:textColor="@color/colorBeautyToastTextColor"
         android:textSize="16sp"/>
 
-</RelativeLayout>
+</LinearLayout>

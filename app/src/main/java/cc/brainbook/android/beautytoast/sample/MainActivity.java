@@ -33,17 +33,17 @@ public class MainActivity extends AppCompatActivity {
         /* ========================= ToastBase ========================= */
 
         /* -------------------- makeText -------------------- */
-        ToastBase toastBase = ToastBase.makeText(getApplicationContext(),"ToastBase!", ToastBase.LENGTH_SHORT);
+//        ToastBase toastBase = ToastBase.makeText(getApplicationContext(),"ToastBase!", ToastBase.LENGTH_SHORT);
 //        ToastBase toastBase = ToastBase.makeText(getApplicationContext(),"ToastBase!", ToastBase.LENGTH_LONG);
 //        ToastBase toastBase = ToastBase.makeText(getApplicationContext(),"ToastBase!", 15000);
 //        ToastBase toastBase = ToastBase.makeText(this,"ToastBase!", 15000);   ///测试销毁时是否内存泄漏
 
-        toastBase.setText("ToastBase!!");
-
-        toastBase.isGravityFullScreen(true);///注意：只针对Gravity.TOP！且必须API 16+！
-        toastBase.setGravity(Gravity.TOP | Gravity.RIGHT, 50, 50);
-
-        toastBase.show();
+//        toastBase.setText("ToastBase!!");
+//
+//        toastBase.isGravityFullScreen(true);///注意：只针对Gravity.TOP！且必须API 16+！
+//        toastBase.setGravity(Gravity.TOP | Gravity.RIGHT, 10, 10);
+//
+//        toastBase.show();
 
 
         /* -------------------- new -------------------- */
@@ -71,20 +71,20 @@ public class MainActivity extends AppCompatActivity {
 //        BeautyToast beautyToast = BeautyToast.makeText(getApplicationContext(),"BeautyToast!", BeautyToast.LENGTH_LONG);
 //        BeautyToast beautyToast = BeautyToast.makeText(getApplicationContext(),"BeautyToast!", 15000);
 //        BeautyToast beautyToast = BeautyToast.makeText(this,"ToastBase!", 15000);   ///测试销毁时是否内存泄漏
-
-//        BeautyToast beautyToast = BeautyToast.makeWarningText(getApplicationContext(),"WarningBeautyToast!", BeautyToast.LENGTH_SHORT);
+//
+        BeautyToast beautyToast = BeautyToast.makeWarningText(getApplicationContext(),"WarningBeautyToast!", BeautyToast.LENGTH_SHORT);
 //        BeautyToast beautyToast = BeautyToast.makeInfoText(getApplicationContext(),"Info BeautyToast!", BeautyToast.LENGTH_SHORT);
 //        BeautyToast beautyToast = BeautyToast.makeSuccessText(getApplicationContext(),"Success BeautyToast!", BeautyToast.LENGTH_SHORT);
 //        BeautyToast beautyToast = BeautyToast.makeErrorText(getApplicationContext(),"Error BeautyToast!", BeautyToast.LENGTH_SHORT);
 
-//        beautyToast.isShowIcon(false);
+        beautyToast.isShowIcon(true);
 
-//        beautyToast.setText("BeautyToast!!");
+        beautyToast.setText("BeautyToast!!");
 
 //        beautyToast.isGravityFullScreen(true);///注意：只针对Gravity.TOP！且必须API 16+！
-//        beautyToast.setGravity(Gravity.TOP | Gravity.RIGHT, 50, 50);
+        beautyToast.setGravity(Gravity.TOP | Gravity.RIGHT, 10, 10);
 
-//        beautyToast.show();
+        beautyToast.show();
 
 
         /* -------------------- new -------------------- */
@@ -170,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d("TAG", "onDestroy()# ");
         super.onDestroy();
 
-//        ///注意：当Context（如Activity/Fragment等）销毁时必须调用此方法，避免内存泄漏！
+        ///注意：当Context（如Activity/Fragment等）销毁时必须调用此方法，避免内存泄漏！
         ToastBase.clear(this);
     }
 
