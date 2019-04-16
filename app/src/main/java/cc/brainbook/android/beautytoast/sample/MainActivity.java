@@ -1,6 +1,5 @@
 package cc.brainbook.android.beautytoast.sample;
 
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -9,6 +8,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import cc.brainbook.android.beautytoast.BeautyToast;
+import cc.brainbook.android.beautytoast.ToastBase;
 import cc.brainbook.android.beautytoast.util.ToastUtil;
 
 public class MainActivity extends AppCompatActivity {
@@ -33,15 +33,18 @@ public class MainActivity extends AppCompatActivity {
         /* ========================= ToastBase ========================= */
 
         /* -------------------- makeText -------------------- */
-////        ToastBase toastBase = ToastBase.makeText(getApplicationContext(),"ToastBase!", ToastBase.LENGTH_SHORT);
-////        ToastBase toastBase = ToastBase.makeText(getApplicationContext(),"ToastBase!", ToastBase.LENGTH_LONG);
+//        ToastBase toastBase = ToastBase.makeText(getApplicationContext(),"ToastBase!", ToastBase.LENGTH_SHORT);
+//        ToastBase toastBase = ToastBase.makeText(getApplicationContext(),"ToastBase!", ToastBase.LENGTH_LONG);
 //        ToastBase toastBase = ToastBase.makeText(getApplicationContext(),"ToastBase!", 15000);
-////        ToastBase toastBase = ToastBase.makeText(this,"ToastBase!", 15000);   ///测试销毁时是否内存泄漏
-//
-////        toastBase.setText("ToastBase!!");
-////        toastBase.setGravity(Gravity.TOP | Gravity.RIGHT, 50, 50);
-//
+//        ToastBase toastBase = ToastBase.makeText(this,"ToastBase!", 15000);   ///测试销毁时是否内存泄漏
+
+//        toastBase.setText("ToastBase!!");
+
+//        toastBase.isGravityFullScreen(true);///注意：只针对Gravity.TOP！且必须API 16+！
+//        toastBase.setGravity(Gravity.TOP | Gravity.RIGHT, 50, 50);
+
 //        toastBase.show();
+
 
         /* -------------------- new -------------------- */
 //        ToastBase toastBase = new ToastBase(this);
@@ -64,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         /* ========================= BeautyToast ========================= */
 
         /* -------------------- makeText -------------------- */
-        BeautyToast beautyToast = BeautyToast.makeText(getApplicationContext(),"BeautyToast!", BeautyToast.LENGTH_SHORT);
+//        BeautyToast beautyToast = BeautyToast.makeText(getApplicationContext(),"BeautyToast!", BeautyToast.LENGTH_SHORT);
 //        BeautyToast beautyToast = BeautyToast.makeText(getApplicationContext(),"BeautyToast!", BeautyToast.LENGTH_LONG);
 //        BeautyToast beautyToast = BeautyToast.makeText(getApplicationContext(),"BeautyToast!", 15000);
 //        BeautyToast beautyToast = BeautyToast.makeText(this,"ToastBase!", 15000);   ///测试销毁时是否内存泄漏
@@ -77,9 +80,12 @@ public class MainActivity extends AppCompatActivity {
 //        beautyToast.isShowIcon(false);
 
 //        beautyToast.setText("BeautyToast!!");
+
+//        beautyToast.isGravityFullScreen(true);///注意：只针对Gravity.TOP！且必须API 16+！
 //        beautyToast.setGravity(Gravity.TOP | Gravity.RIGHT, 50, 50);
 
 //        beautyToast.show();
+
 
         /* -------------------- new -------------------- */
 //        BeautyToast beautyToast = new BeautyToast(this);
@@ -124,48 +130,44 @@ public class MainActivity extends AppCompatActivity {
 
 //        beautyToast.show();
 
+
         /* -------------------- target -------------------- */
         target = findViewById(R.id.target);
         target1 = findViewById(R.id.target1);
 
-//        beautyToast.isGravityFullScreen(true);
+//        beautyToast.isGravityFullScreen(true);///注意：只针对Gravity.TOP！且必须API 16+！
+//        beautyToast.setTarget(target1, 0, 0);///注意：Target必须已经显示（即Layout完成），否则抛出异常！
+//        beautyToast.show();
 
-//        beautyToast.setTargetGravity(ToastUtil.GRAVITY_TO_LEFT_OF_TARGET);
-//        beautyToast.setTargetGravity(ToastUtil.GRAVITY_ABOVE_TARGET);
-//        beautyToast.setTargetGravity(ToastUtil.GRAVITY_TO_RIGHT_OF_TARGET);
-        beautyToast.setTargetGravity(ToastUtil.GRAVITY_BELOW_TARGET);
-
-        beautyToast.setTarget(target1);
-        beautyToast.show();
     }
 
     @Override
     protected void onStart() {
-        Log.d("TAG", "onStart: ");
+        Log.d("TAG", "onStart()# ");
         super.onStart();
     }
 
     @Override
     protected void onResume() {
-        Log.d("TAG", "onResume: ");
+        Log.d("TAG", "onResume()# ");
         super.onResume();
     }
 
     @Override
     protected void onPause() {
-        Log.d("TAG", "onPause: ");
+        Log.d("TAG", "onPause()# ");
         super.onPause();
     }
 
     @Override
     protected void onStop() {
-        Log.d("TAG", "onStop: ");
+        Log.d("TAG", "onStop()# ");
         super.onStop();
     }
 
     @Override
     protected void onDestroy() {
-        Log.d("TAG", "onDestroy: ");
+        Log.d("TAG", "onDestroy()# ");
         super.onDestroy();
 
 //        ///注意：当Context（如Activity/Fragment等）销毁时必须调用此方法，避免内存泄漏！
@@ -173,9 +175,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void btn1Click(View view) {
+//        ToastBase toastBase = ToastBase.makeText(getApplicationContext(),"ToastBase!", 3500);
+//        toastBase = ToastBase.makeText(this,"ToastBase!", 35000);
+//        toastBase.show();
+
+        /* -------------------- target -------------------- */
 //        BeautyToast beautyToast = BeautyToast.makeText(getApplicationContext(),"BeautyToast! target1", BeautyToast.LENGTH_LONG);
-////        beautyToast.setTarget(target1);
-//        beautyToast.show();
+//        BeautyToast beautyToast = BeautyToast.makeWarningText(getApplicationContext(),"WarningBeautyToast!", BeautyToast.LENGTH_SHORT);
+//        BeautyToast beautyToast = BeautyToast.makeInfoText(getApplicationContext(),"Info BeautyToast!", BeautyToast.LENGTH_SHORT);
+//        BeautyToast beautyToast = BeautyToast.makeSuccessText(getApplicationContext(),"Success BeautyToast!", BeautyToast.LENGTH_SHORT);
+        BeautyToast beautyToast = BeautyToast.makeErrorText(getApplicationContext(),"Error BeautyToast!", BeautyToast.LENGTH_SHORT);
+//        beautyToast.isGravityFullScreen(true);///注意：只针对Gravity.TOP！且必须API 16+！
+        ///注意：Target必须已经显示（即Layout完成），否则抛出异常！比如不能在Activity的onCreate()中调用本方法
+        beautyToast.setTarget(target1, ToastUtil.GRAVITY_ABOVE_TARGET, 0, 0);
+        beautyToast.show();
     }
 
 }

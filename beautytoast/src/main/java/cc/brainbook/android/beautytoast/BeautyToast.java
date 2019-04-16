@@ -6,14 +6,12 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
-import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 
 import java.lang.ref.WeakReference;
@@ -148,12 +146,8 @@ public class BeautyToast extends ToastBase {
     }
 
     ///image view
-    protected ImageView mImageView;
+    private ImageView mImageView;
     public ImageView getImageView() {
-        if (mImageView == null) {
-            mImageView = getDefaultImageView();
-        }
-
         return mImageView;
     }
     public ImageView getDefaultImageView() {
@@ -348,7 +342,16 @@ public class BeautyToast extends ToastBase {
     public View getTarget() {
         return mTarget.get();
     }
-    public ToastBase setTarget(View view) {
+
+    /**
+     * 注意：Target必须已经显示（即Layout完成），否则抛出异常！比如不能在Activity的onCreate()中调用本方法
+     *
+     * @param view
+     * @param targetOffsetX
+     * @param targetOffsetY
+     * @return
+     */
+    public ToastBase setTarget(View view, int targetGravity, final int targetOffsetX, final int targetOffsetY) {
         if (view == null) {
             mTarget = null;
 
@@ -357,57 +360,14 @@ public class BeautyToast extends ToastBase {
 
         mTarget = new WeakReference<>(view);
 
-        getTarget().getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                    getTarget().getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                }else {
-                    getTarget().getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                }
-
-                ///在Target旁边显示Toast
-                ToastUtil.setGravityByTarget(mContext, BeautyToast.this, isLayoutFullScreen,
-                        getTarget(), mTargetGravity, mTargetOffsetX,mTargetOffsetY);
-            }
-        });
-
-        ///在Target旁边显示Toast
-        ToastUtil.setGravityByTarget(mContext, BeautyToast.this, isLayoutFullScreen,
-                getTarget(), mTargetGravity, mTargetOffsetX,mTargetOffsetY);
-
-        return this;
-    }
-
-    ///target: OffsetX, OffsetY
-    private int mTargetOffsetX;
-    public int getmTargetOffsetX() {
-        return mTargetOffsetX;
-    }
-    public ToastBase setmTargetOffsetX(int targetOffsetX) {
-        this.mTargetOffsetX = targetOffsetX;
-
-        return this;
-    }
-    private int mTargetOffsetY;
-    public int getmTargetOffsetY() {
-        return mTargetOffsetY;
-    }
-
-    public ToastBase setmTargetOffsetY(int targetOffsetY) {
-        this.mTargetOffsetY = targetOffsetY;
-
-        return this;
-    }
-
-    ///target: mTargetGravity
-    private int mTargetGravity = ToastUtil.GRAVITY_TO_LEFT_OF_TARGET;
-
-    public int getTargetGravity() {
-        return mTargetGravity;
-    }
-    public ToastBase setTargetGravity(final int targetGravity) {
-        mTargetGravity = targetGravity;
+        ///判断Target是否已经显示（即Layout完成）
+        if (mTarget.get().isShown()) {
+            ///在Target旁边显示Toast
+            ToastUtil.setGravityByTarget(mContext, BeautyToast.this, isLayoutFullScreen,
+                    getTarget(), targetGravity, targetOffsetX, targetOffsetY);
+        } else {
+            throw new RuntimeException("The target view has not been laid out");
+        }
 
         return this;
     }

@@ -21,7 +21,7 @@ import static cc.brainbook.android.beautytoast.BuildConfig.DEBUG;
 public class ToastBase extends AbstractToastBase {
     private static final String TAG = "TAG";
 
-    protected Toast mToast;
+    private Toast mToast;
     private CountDownTimer mCountDownTimer;
 
     /**
@@ -137,7 +137,7 @@ public class ToastBase extends AbstractToastBase {
     }
 
     ///duration
-    protected long mDuration = LENGTH_SHORT;
+    private long mDuration = LENGTH_SHORT;
     public ToastBase setDuration(long duration) {
         mDuration = duration;
 
@@ -145,9 +145,8 @@ public class ToastBase extends AbstractToastBase {
     }
 
     ///view
-    private View mView;
     public View getView() {
-        return mView;
+        return mToast.getView();
     }
     public View getDefaultView() {
         final LayoutInflater layoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -170,7 +169,7 @@ public class ToastBase extends AbstractToastBase {
     }
 
     ///text view
-    protected TextView mTextView;
+    private TextView mTextView;
     public TextView getTextView() {
         return mTextView;
     }
@@ -263,6 +262,8 @@ public class ToastBase extends AbstractToastBase {
 
         return this;
     }
+    /* ---------------- 动态方法 ---------------- */
+
 
     ///LayoutFullScreen
     protected boolean isLayoutFullScreen = false;
@@ -276,7 +277,7 @@ public class ToastBase extends AbstractToastBase {
      * Toast默认Gravity的坐标系不包含状态栏（即非全屏，与BeautyToast中Target产生高度上的错位！）
      * 设置为全屏模式后，Gravity的坐标系为全屏，包含了状态栏（与BeautyToast中Target的坐标系保持一致）
      *
-     * 注意：必须API 16+
+     * 注意：只针对Gravity.TOP！且必须API 16+！
      */
     public ToastBase isGravityFullScreen(boolean isGravityFullScreen) {
         this.isLayoutFullScreen = isGravityFullScreen;
@@ -290,6 +291,5 @@ public class ToastBase extends AbstractToastBase {
 
         return this;
     }
-    /* ---------------- 动态方法 ---------------- */
 
 }

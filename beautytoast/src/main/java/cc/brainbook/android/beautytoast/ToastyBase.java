@@ -1,6 +1,5 @@
 package cc.brainbook.android.beautytoast;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
@@ -56,7 +55,7 @@ public class ToastyBase extends AbstractToastBase {
     }
 
     ///ToastyLayoutParams
-    private WindowManager.LayoutParams mToastyLayoutParams;
+    protected WindowManager.LayoutParams mToastyLayoutParams;
     private WindowManager.LayoutParams getDefaultToastyLayoutParams() {
         final WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
 
@@ -145,7 +144,7 @@ public class ToastyBase extends AbstractToastBase {
     }
 
     ///duration
-    protected long mDuration = LENGTH_SHORT;
+    private long mDuration = LENGTH_SHORT;
     public ToastyBase setDuration(long duration) {
         mDuration = duration;
 
@@ -168,7 +167,7 @@ public class ToastyBase extends AbstractToastBase {
     }
 
     ///text view
-    protected TextView mTextView;
+    private TextView mTextView;
     public TextView getTextView() {
         return mTextView;
     }
@@ -182,35 +181,37 @@ public class ToastyBase extends AbstractToastBase {
         return this;
     }
 
-///？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？
-//    ///gravity, xOffset, yOffset
-//    public int getGravity() {
-//        return mToast.getGravity();
-//    }
-//    public int getXOffset() {
-//        return mToast.getYOffset();
-//    }
-//    public int getYOffset() {
-//        return mToast.getYOffset();
-//    }
-//    public ToastyBase setGravity(int gravity, int xOffset, int yOffset) {
-//        mToast.setGravity(gravity, xOffset, yOffset);
-//
-//        return this;
-//    }
-//
-//    ///margin
-//    public float getHorizontalMargin() {
-//        return mToast.getHorizontalMargin();
-//    }
-//    public float getVerticalMargin() {
-//        return mToast.getVerticalMargin();
-//    }
-//    public ToastyBase setMargin(float horizontalMargin, float verticalMargin) {
-//        mToast.setMargin(horizontalMargin, verticalMargin);
-//
-//        return this;
-//    }
+    ///gravity, xOffset, yOffset
+    public int getGravity() {
+        return mToastyLayoutParams.gravity;
+    }
+    public int getXOffset() {
+        return mToastyLayoutParams.x;
+    }
+    public int getYOffset() {
+        return mToastyLayoutParams.y;
+    }
+    public ToastyBase setGravity(int gravity, int xOffset, int yOffset) {
+        mToastyLayoutParams.gravity = gravity;
+        mToastyLayoutParams.x = xOffset;
+        mToastyLayoutParams.y = yOffset;
+
+        return this;
+    }
+
+    ///margin
+    public float getHorizontalMargin() {
+        return mToastyLayoutParams.horizontalMargin;
+    }
+    public float getVerticalMargin() {
+        return mToastyLayoutParams.verticalMargin;
+    }
+    public ToastyBase setMargin(float horizontalMargin, float verticalMargin) {
+        mToastyLayoutParams.horizontalMargin = horizontalMargin;
+        mToastyLayoutParams.verticalMargin = verticalMargin;
+
+        return this;
+    }
     /* ---------------- 动态方法：参照Toast源码 ---------------- */
 
 
@@ -263,5 +264,25 @@ public class ToastyBase extends AbstractToastBase {
         return this;
     }
     /* ---------------- 动态方法 ---------------- */
+
+
+    /**
+     * 更新Toasty
+     *
+     * 当mToastyLayoutParams改变后（主要指Gravity），更新Toasty
+     */
+    public void update() {
+        if (mView == null) {
+            throw new RuntimeException("mView cannot be null");
+        }
+
+        if (mView.isShown()) {
+            ///更新Toasty
+            final WindowManager windowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
+            windowManager.updateViewLayout(getView(), mToastyLayoutParams);
+        } else {
+            throw new RuntimeException("mView has not been laid out");
+        }
+    }
 
 }

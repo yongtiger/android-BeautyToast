@@ -13,6 +13,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
 import cc.brainbook.android.beautytoast.ToastBase;
+import cc.brainbook.android.beautytoast.ToastyBase;
 
 public class ToastUtil {
 
@@ -50,7 +51,11 @@ public class ToastUtil {
 //        ///获得target的坐标
 //        final int[] targetLocation = new int[2];
 //        target.getLocationInWindow(targetLocation);
-////        target.getLocationOnScreen(targetLocation);
+//        ///getLocationOnScreen() and getLocationInWindow() normally return the same values.
+//        // This is because the window is normally the same size as the screen.
+//        // However, sometimes the window is smaller than the screen. For example, in a Dialog or a custom system keyboard
+//        ///https://stackoverflow.com/questions/17672891/getlocationonscreen-vs-getlocationinwindow
+//        target.getLocationOnScreen(targetLocation);
 //
 //        int xOffset = targetLocation[0];
 //        int yOffset = targetLocation[1];
@@ -103,12 +108,18 @@ public class ToastUtil {
 
         final int toastHalfWidth = toastView.getMeasuredWidth() / 2;
         final int toastHalfHeight = toastView.getMeasuredHeight() / 2;
+
+//        target.measure(0,0);  ///[FIX#使用带icon的BeautyToast时显示错位！]
         final int targetHalfWidth = target.getMeasuredWidth() / 2;
         final int targetHalfHeight = target.getMeasuredHeight() / 2;
 
         ///获得target的坐标
         final int[] targetLocation = new int[2];
         target.getLocationInWindow(targetLocation);
+        ///getLocationOnScreen() and getLocationInWindow() normally return the same values.
+        // This is because the window is normally the same size as the screen.
+        // However, sometimes the window is smaller than the screen. For example, in a Dialog or a custom system keyboard
+        ///https://stackoverflow.com/questions/17672891/getlocationonscreen-vs-getlocationinwindow
 //        target.getLocationOnScreen(targetLocation);
 
         final int targetCenterX = targetLocation[0] + targetHalfWidth;
@@ -145,6 +156,68 @@ public class ToastUtil {
         }
 
         ///////?????????[BUG#Toast.setGravity()在Toast显示过程中，无法移动其位置！]
+        toast.setGravity(Gravity.CENTER, xOffset + offsetX, yOffset + offsetY);
+    }
+    public static void setGravityByTarget(Context context, ToastyBase toast, boolean isLayoutFullScreen,
+                                          View target, int targetGravity, int offsetX, int offsetY) {
+        if (toast == null || target == null) {
+            return;
+        }
+
+        ///获得屏幕宽高
+        final int screenWidth= context.getResources().getDisplayMetrics().widthPixels;
+        final int screenHeight= context.getResources().getDisplayMetrics().heightPixels;
+
+        final View toastView = toast.getView();
+        toastView.measure(0,0);  ///[FIX#使用带icon的BeautyToast时显示错位！]
+        final int toastHalfWidth = toastView.getMeasuredWidth() / 2;
+        final int toastHalfHeight = toastView.getMeasuredHeight() / 2;
+
+//        target.measure(0,0);  ///[FIX#使用带icon的BeautyToast时显示错位！]
+        final int targetHalfWidth = target.getMeasuredWidth() / 2;
+        final int targetHalfHeight = target.getMeasuredHeight() / 2;
+
+        ///获得target的坐标
+        final int[] targetLocation = new int[2];
+//        target.getLocationInWindow(targetLocation);
+        ///getLocationOnScreen() and getLocationInWindow() normally return the same values.
+        // This is because the window is normally the same size as the screen.
+        // However, sometimes the window is smaller than the screen. For example, in a Dialog or a custom system keyboard
+        ///https://stackoverflow.com/questions/17672891/getlocationonscreen-vs-getlocationinwindow
+        target.getLocationOnScreen(targetLocation);
+
+        final int targetCenterX = targetLocation[0] + targetHalfWidth;
+        final int targetCenterY = targetLocation[1] + targetHalfHeight;
+
+        int xOffset = targetCenterX - screenWidth / 2;
+        int yOffset = targetCenterY - screenHeight / 2;
+
+        switch (targetGravity) {
+            case GRAVITY_ABOVE_TARGET:
+                yOffset -= toastHalfHeight + targetHalfHeight;
+
+                break;
+            case GRAVITY_TO_RIGHT_OF_TARGET:
+                xOffset += toastHalfWidth + targetHalfWidth;
+
+                break;
+            case GRAVITY_BELOW_TARGET:
+                yOffset += toastHalfHeight + targetHalfHeight;
+
+                break;
+            default:
+                xOffset -= toastHalfWidth + targetHalfWidth;
+        }
+
+        ///Toast非全屏显示时，需要调整setGravity()的yOffset
+        ///Toast默认Gravity的坐标系不包含状态栏（即非全屏)，与BeautyToast中Target产生高度上的错位！
+        if (!isLayoutFullScreen) {
+            final int statusBarHeight = getStatusBarHeight(context);
+            if (statusBarHeight != -1) {
+                yOffset -= statusBarHeight / 2;
+            }
+        }
+
         toast.setGravity(Gravity.CENTER, xOffset + offsetX, yOffset + offsetY);
     }
 

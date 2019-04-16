@@ -1,18 +1,16 @@
 package cc.brainbook.android.beautytoast.sample;
 
 import android.Manifest;
-import android.content.Context;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
-import android.view.WindowManager;
 
+import cc.brainbook.android.beautytoast.BeautyToasty;
 import cc.brainbook.android.beautytoast.ToastyBase;
-
-//import cc.brainbook.android.BeautyToasty.BeautyToasty;
-//import cc.brainbook.android.BeautyToasty.util.ToastUtil;
+import cc.brainbook.android.beautytoast.util.ToastUtil;
 
 public class Main2Activity extends AppCompatActivity {
 
@@ -21,12 +19,15 @@ public class Main2Activity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("TAG", "onCreate: ");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
         ActivityCompat.requestPermissions(this,
                 new String[]{Manifest.permission.SYSTEM_ALERT_WINDOW},
                 1);
+
 
 //        /* ========================= 参考对比原生Toast ========================= */
 //        Toast toast = Toast.makeText(getApplicationContext(), "Toast!", Toast.LENGTH_LONG);
@@ -42,10 +43,12 @@ public class Main2Activity extends AppCompatActivity {
 //        ToastyBase toastyBase = ToastyBase.makeText(getApplicationContext(),"ToastyBase!", 15000);
 //        ToastyBase toastyBase = ToastyBase.makeText(this,"ToastyBase!", 15000);   ///测试销毁时是否内存泄漏
 
-//        ToastyBase.setText("ToastyBase!!");
-//        ToastyBase.setGravity(Gravity.TOP | Gravity.RIGHT, 50, 50);
+//        toastyBase.setText("ToastyBase!!");
+
+//        toastyBase.setGravity(Gravity.TOP | Gravity.RIGHT, 50, 50);
 
 //        toastyBase.show();
+
 
         /* -------------------- new -------------------- */
 //        ToastyBase toastyBase = new ToastyBase(this);
@@ -71,6 +74,7 @@ public class Main2Activity extends AppCompatActivity {
 //        BeautyToasty beautyToasty = BeautyToasty.makeText(getApplicationContext(),"BeautyToasty!", BeautyToasty.LENGTH_SHORT);
 //        BeautyToasty beautyToasty = BeautyToasty.makeText(getApplicationContext(),"BeautyToasty!", BeautyToasty.LENGTH_LONG);
 //        BeautyToasty beautyToasty = BeautyToasty.makeText(getApplicationContext(),"BeautyToasty!", 15000);
+//        BeautyToasty beautyToasty = BeautyToasty.makeText(getApplicationContext(),"BeautyToasty!", 15000);
 //        BeautyToasty beautyToasty = BeautyToasty.makeText(this,"ToastyBase!", 15000);   ///测试销毁时是否内存泄漏
 
 //        BeautyToasty beautyToasty = BeautyToasty.makeWarningText(getApplicationContext(),"WarningBeautyToasty!", BeautyToasty.LENGTH_SHORT);
@@ -82,7 +86,7 @@ public class Main2Activity extends AppCompatActivity {
 
 //        beautyToasty.setText("BeautyToasty!!");
 //        beautyToasty.setGravity(Gravity.TOP | Gravity.RIGHT, 50, 50);
-
+//
 //        beautyToasty.show();
 
         /* -------------------- new -------------------- */
@@ -132,59 +136,69 @@ public class Main2Activity extends AppCompatActivity {
         target = findViewById(R.id.target);
         target1 = findViewById(R.id.target1);
 
-//        BeautyToasty.isGravityFullScreen(true);
-
-//        beautyToasty.setTargetGravity(ToastUtil.GRAVITY_TO_LEFT_OF_TARGET);
-//        beautyToasty.setTargetGravity(ToastUtil.GRAVITY_ABOVE_TARGET);
-//        beautyToasty.setTargetGravity(ToastUtil.GRAVITY_TO_RIGHT_OF_TARGET);
-//        beautyToasty.setTargetGravity(ToastUtil.GRAVITY_BELOW_TARGET);
-//
-//        beautyToasty.setTarget(target1);
+//        beautyToasty.setTarget(target1, 0, 0);///注意：Target必须已经显示（即Layout完成），否则抛出异常！
 //        beautyToasty.show();
+
+
+        /* -------------------- update -------------------- */
+//        mToastyBase = BeautyToasty.makeText(getApplicationContext(),"mToastyBase!", 15000);
+//        mToastyBase.show();
+
     }
 
     @Override
     protected void onStart() {
-        Log.d("TAG", "onStart: ");
+        Log.d("TAG", "onStart()# ");
         super.onStart();
     }
 
     @Override
     protected void onResume() {
-        Log.d("TAG", "onResume: ");
+        Log.d("TAG", "onResume()# ");
         super.onResume();
     }
 
     @Override
     protected void onPause() {
-        Log.d("TAG", "onPause: ");
+        Log.d("TAG", "onPause()# ");
         super.onPause();
     }
 
     @Override
     protected void onStop() {
-        Log.d("TAG", "onStop: ");
+        Log.d("TAG", "onStop()# ");
         super.onStop();
     }
 
     @Override
     protected void onDestroy() {
-        Log.d("TAG", "onDestroy: ");
+        Log.d("TAG", "onDestroy()# ");
         super.onDestroy();
 
         ///注意：当Context（如Activity/Fragment等）销毁时必须调用此方法，避免内存泄漏！
-        ToastyBase.clear(this);
+//        ToastyBase.clear(this);
     }
 
-    private ToastyBase toastyBase;
     public void btn1Click(View view) {
-        ToastyBase toastyBase = ToastyBase.makeText(getApplicationContext(),"ToastyBase!", 3500);///需要浮动窗权限！
+//        ToastyBase toastyBase = ToastyBase.makeText(getApplicationContext(),"ToastyBase!", 3500);///需要浮动窗权限！
 //        toastyBase = ToastyBase.makeText(this,"ToastyBase!", 35000);
-        toastyBase.show();
+//        toastyBase.show();
 
-//        BeautyToasty beautyToasty = BeautyToasty.makeText(getApplicationContext(),"BeautyToasty! target1", BeautyToasty.LENGTH_LONG);
-////        beautyToasty.setTarget(target1);
-//        beautyToasty.show();
+        /* -------------------- target -------------------- */
+        BeautyToasty beautyToasty = BeautyToasty.makeText(getApplicationContext(),"BeautyToasty!", BeautyToasty.LENGTH_LONG);
+//        BeautyToasty beautyToasty = BeautyToasty.makeWarningText(getApplicationContext(),"WarningBeautyToasty!", BeautyToasty.LENGTH_SHORT);
+//        BeautyToasty beautyToasty = BeautyToasty.makeInfoText(getApplicationContext(),"Info BeautyToasty!", BeautyToasty.LENGTH_SHORT);
+//        BeautyToasty beautyToasty = BeautyToasty.makeSuccessText(getApplicationContext(),"Success BeautyToasty!", BeautyToasty.LENGTH_SHORT);
+//        BeautyToasty beautyToasty = BeautyToasty.makeErrorText(getApplicationContext(),"Error BeautyToasty!", BeautyToasty.LENGTH_SHORT);
+        ///注意：Target必须已经显示（即Layout完成），否则抛出异常！比如不能在Activity的onCreate()中调用本方法
+        beautyToasty.setTarget(target1, ToastUtil.GRAVITY_ABOVE_TARGET, 0, 0);
+        beautyToasty.show();
+
+
+        /* -------------------- update -------------------- */
+//        mToastyBase.setGravity(Gravity.TOP | Gravity.RIGHT, 50, 50);
+//        mToastyBase.update();
 
     }
+    private ToastyBase mToastyBase;
 }
