@@ -43,6 +43,12 @@ public abstract class AbstractBase {
      * 注意：当Context（如Activity/Fragment等）销毁时必须调用AbstractToastBase.clear(Context)方法清除，避免内存泄漏！
      */
     private static AbstractBase sCurrentShowingToast;
+    public static AbstractBase getCurrentShowingToast() {
+        return sCurrentShowingToast;
+    }
+    public static boolean hasCurrentShowingToast() {
+        return sCurrentShowingToast != null;
+    }
 
     /**
      * 是否notify的标志（用volatile修饰符！）
