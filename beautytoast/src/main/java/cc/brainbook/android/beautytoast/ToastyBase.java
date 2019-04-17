@@ -99,19 +99,7 @@ public class ToastyBase extends AbstractBase {
         windowManager.addView(mView, mToastyLayoutParams);
 
         ///延时
-        mHandler.postDelayed(mRunnable, calMillisInFuture(mDuration));
-    }
-
-    /**
-     * 计算CountDownTimer的总时长
-     *
-     * 注意：覆写此方法，扣除出场动画的时间
-     *
-     * @param duration
-     * @return
-     */
-    protected long calMillisInFuture(long duration) {
-        return duration;
+        mHandler.postDelayed(mRunnable, mDuration);
     }
 
     @Override

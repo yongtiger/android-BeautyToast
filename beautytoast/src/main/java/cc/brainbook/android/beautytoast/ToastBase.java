@@ -68,7 +68,7 @@ public class ToastBase extends AbstractBase {
             countDownInterval = LENGTH_SHORT;
         }
         mToast.setDuration(Toast.LENGTH_LONG);
-        mCountDownTimer = new CountDownTimer(calMillisInFuture(mDuration), countDownInterval) {   ///CountDownTimer的onTick()的周期为LENGTH_SHORT即可
+        mCountDownTimer = new CountDownTimer(mDuration, countDownInterval) {   ///CountDownTimer的onTick()的周期为LENGTH_SHORT即可
             @Override
             public void onTick(long millisUntilFinished) {
                 if (DEBUG) Log.d(TAG, "ToastBase# handleShow()# CountDownTimer.onTick()# millisUntilFinished: " + millisUntilFinished);
@@ -90,18 +90,6 @@ public class ToastBase extends AbstractBase {
             }
         };
         mCountDownTimer.start();
-    }
-
-    /**
-     * 计算CountDownTimer的总时长
-     *
-     * 注意：覆写此方法，扣除出场动画的时间
-     *
-     * @param duration
-     * @return
-     */
-    protected long calMillisInFuture(long duration) {
-        return duration;
     }
 
     @Override

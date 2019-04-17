@@ -34,17 +34,17 @@ public class MainActivity extends AppCompatActivity {
         /* ========================= ToastBase ========================= */
 
         /* -------------------- makeText -------------------- */
-        ToastBase toastBase = ToastBase.makeText(getApplicationContext(),"ToastBase!", ToastBase.LENGTH_SHORT);
+//        ToastBase toastBase = ToastBase.makeText(getApplicationContext(),"ToastBase!", ToastBase.LENGTH_SHORT);
 //        ToastBase toastBase = ToastBase.makeText(getApplicationContext(),"ToastBase!", ToastBase.LENGTH_LONG);
 //        ToastBase toastBase = ToastBase.makeText(getApplicationContext(),"ToastBase!", 15000);
 //        ToastBase toastBase = ToastBase.makeText(this,"ToastBase!", 15000);   ///测试销毁时是否内存泄漏
 
-        toastBase.setText("ToastBase!!");
-
-//        toastBase.isGravityFullScreen(true);///注意：只针对Gravity.TOP！且必须API 16+！
-        toastBase.setGravity(Gravity.TOP | Gravity.RIGHT, 10, 10);
-
-        toastBase.show();
+//        toastBase.setText("ToastBase!!");
+//
+////        toastBase.isGravityFullScreen(true);///注意：只针对Gravity.TOP！且必须API 16+！
+//        toastBase.setGravity(Gravity.TOP | Gravity.RIGHT, 10, 10);
+//
+//        toastBase.show();
 
 
         /* -------------------- new -------------------- */
@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
         /* -------------------- makeText -------------------- */
 //        BeautyToast beautyToast = BeautyToast.makeText(getApplicationContext(),"BeautyToast!", BeautyToast.LENGTH_SHORT);
-//        BeautyToast beautyToast = BeautyToast.makeText(getApplicationContext(),"BeautyToast!", BeautyToast.LENGTH_LONG);
+        BeautyToast beautyToast = BeautyToast.makeText(getApplicationContext(),"BeautyToast!", BeautyToast.LENGTH_LONG);
 //        BeautyToast beautyToast = BeautyToast.makeText(getApplicationContext(),"BeautyToast!", 15000);
 //        BeautyToast beautyToast = BeautyToast.makeText(this,"ToastBase!", 15000);   ///测试销毁时是否内存泄漏
 //
@@ -115,13 +115,13 @@ public class MainActivity extends AppCompatActivity {
 
         /* -------------------- animation -------------------- */
         ///AnimationIn 入场动画
-//        beautyToast.setAnimationIn(AnimationUtil.ANIMATION_LEFT_IN);
+        beautyToast.setAnimationIn(AnimationUtil.ANIMATION_LEFT_IN);
 //        beautyToast.setAnimationIn(AnimationUtil.ANIMATION_TOP_IN);
 //        beautyToast.setAnimationIn(AnimationUtil.ANIMATION_RIGHT_IN);
 //        beautyToast.setAnimationIn(AnimationUtil.ANIMATION_BOTTOM_IN);
 //        beautyToast.setAnimationIn(AnimationUtil.ANIMATION_FADE_IN);
         ///AnimationOut 出场动画
-//        beautyToast.setAnimationOut(AnimationUtil.ANIMATION_LEFT_OUT);
+        beautyToast.setAnimationOut(AnimationUtil.ANIMATION_LEFT_OUT);
 //        beautyToast.setAnimationOut(AnimationUtil.ANIMATION_TOP_OUT);
 //        beautyToast.setAnimationOut(AnimationUtil.ANIMATION_RIGHT_OUT);
 //        beautyToast.setAnimationOut(AnimationUtil.ANIMATION_BOTTOM_OUT);
@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
         ///取消动画
 //        beautyToast.setAnimationOut(AnimationUtil.NO_ANIMATION);
 
-//        beautyToast.show();
+        beautyToast.show();
 
 
         /* -------------------- target -------------------- */
@@ -182,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         /* -------------------- target -------------------- */
-//        BeautyToast beautyToast = BeautyToast.makeText(getApplicationContext(),"BeautyToast! target1", BeautyToast.LENGTH_LONG);
+        BeautyToast beautyToast = BeautyToast.makeText(getApplicationContext(),"BeautyToast! target1", BeautyToast.LENGTH_LONG);
 //        BeautyToast beautyToast = BeautyToast.makeWarningText(getApplicationContext(),"WarningBeautyToast!", BeautyToast.LENGTH_SHORT);
 //        BeautyToast beautyToast = BeautyToast.makeInfoText(getApplicationContext(),"Info BeautyToast!", BeautyToast.LENGTH_SHORT);
 //        BeautyToast beautyToast = BeautyToast.makeSuccessText(getApplicationContext(),"Success BeautyToast!", BeautyToast.LENGTH_SHORT);
@@ -194,13 +194,13 @@ public class MainActivity extends AppCompatActivity {
 //        beautyToast.setTarget(target1, ToastUtil.GRAVITY_ABOVE_TARGET, 0, 0);
 
         ///AnimationIn 入场动画
-//        beautyToast.setAnimationIn(AnimationUtil.ANIMATION_LEFT_IN);
+        beautyToast.setAnimationIn(AnimationUtil.ANIMATION_LEFT_IN);
 //        beautyToast.setAnimationIn(AnimationUtil.ANIMATION_TOP_IN);
 //        beautyToast.setAnimationIn(AnimationUtil.ANIMATION_RIGHT_IN);
 //        beautyToast.setAnimationIn(AnimationUtil.ANIMATION_BOTTOM_IN);
 //        beautyToast.setAnimationIn(AnimationUtil.ANIMATION_FADE_IN);
         ///AnimationOut 出场动画
-//        beautyToast.setAnimationOut(AnimationUtil.ANIMATION_LEFT_OUT);
+        beautyToast.setAnimationOut(AnimationUtil.ANIMATION_LEFT_OUT);
 //        beautyToast.setAnimationOut(AnimationUtil.ANIMATION_TOP_OUT);
 //        beautyToast.setAnimationOut(AnimationUtil.ANIMATION_RIGHT_OUT);
 //        beautyToast.setAnimationOut(AnimationUtil.ANIMATION_BOTTOM_OUT);
@@ -208,7 +208,7 @@ public class MainActivity extends AppCompatActivity {
         ///取消动画
 //        beautyToast.setAnimationOut(AnimationUtil.NO_ANIMATION);
 
-//        beautyToast.show();
+        beautyToast.show();
     }
 
 }
