@@ -219,6 +219,7 @@ public class BeautyToasty extends ToastyBase {
             if (cornerRadius < -0.5f) {
                 throw new IllegalArgumentException("CornerRadius can not be less than -0.5f");
             } else if (cornerRadius < 0f && cornerRadius >= -0.5f) {
+                ///[FIX#on Android 4.2. It looks like java.lang.NullPointerException at android.view.View.measure]RelativeLayout替换为LinearLayout
                 view.measure(0,0);  ///避免获得宽高为0
                 float realCornerRadius = - view.getMeasuredHeight() * cornerRadius;
                 ((GradientDrawable) background).setCornerRadius(realCornerRadius);
