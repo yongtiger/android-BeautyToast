@@ -74,10 +74,10 @@ public class Main2Activity extends AppCompatActivity {
 
         /* -------------------- makeText -------------------- */
 //        BeautyToasty beautyToasty = BeautyToasty.makeText(getApplicationContext(),"BeautyToasty!", BeautyToasty.LENGTH_SHORT);
-        BeautyToasty beautyToasty = BeautyToasty.makeText(getApplicationContext(),"BeautyToasty!", BeautyToasty.LENGTH_LONG);
+//        BeautyToasty beautyToasty = BeautyToasty.makeText(getApplicationContext(),"BeautyToasty!", BeautyToasty.LENGTH_LONG);
 //        BeautyToasty beautyToasty = BeautyToasty.makeText(getApplicationContext(),"BeautyToasty!", 15000);
 //        BeautyToasty beautyToasty = BeautyToasty.makeText(getApplicationContext(),"BeautyToasty!", 15000);
-//        BeautyToasty beautyToasty = BeautyToasty.makeText(this,"ToastyBase!", 15000);   ///测试销毁时是否内存泄漏
+        BeautyToasty beautyToasty = BeautyToasty.makeText(this,"ToastyBase!", 5000);   ///测试销毁时是否内存泄漏
 
 //        BeautyToasty beautyToasty = BeautyToasty.makeWarningText(getApplicationContext(),"WarningBeautyToasty!", BeautyToasty.LENGTH_SHORT);
 //        BeautyToasty beautyToasty = BeautyToasty.makeInfoText(getApplicationContext(),"Info BeautyToasty!", BeautyToasty.LENGTH_SHORT);
@@ -200,15 +200,15 @@ public class Main2Activity extends AppCompatActivity {
 //        beautyToasty.setTarget(target1, ToastUtil.GRAVITY_ABOVE_TARGET, 0, 0);
 
         ///AnimationIn 入场动画
-//        beautyToasty.setAnimationIn(AnimationUtil.ANIMATION_LEFT_IN);
-        beautyToasty.setAnimationIn(AnimationUtil.ANIMATION_TOP_IN);
+        beautyToasty.setAnimationIn(AnimationUtil.ANIMATION_LEFT_IN);
+//        beautyToasty.setAnimationIn(AnimationUtil.ANIMATION_TOP_IN);
 //        beautyToasty.setAnimationIn(AnimationUtil.ANIMATION_RIGHT_IN);
 //        beautyToasty.setAnimationIn(AnimationUtil.ANIMATION_BOTTOM_IN);
 //        beautyToasty.setAnimationIn(AnimationUtil.ANIMATION_FADE_IN);
         ///AnimationOut 出场动画
 //        beautyToasty.setAnimationOut(AnimationUtil.ANIMATION_LEFT_OUT);
 //        beautyToasty.setAnimationOut(AnimationUtil.ANIMATION_TOP_OUT);
-        beautyToasty.setAnimationOut(AnimationUtil.ANIMATION_RIGHT_OUT);
+//        beautyToasty.setAnimationOut(AnimationUtil.ANIMATION_RIGHT_OUT);
 //        beautyToasty.setAnimationOut(AnimationUtil.ANIMATION_BOTTOM_OUT);
 //        beautyToasty.setAnimationOut(AnimationUtil.ANIMATION_FADE_OUT);
 

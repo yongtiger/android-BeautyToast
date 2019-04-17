@@ -3,6 +3,7 @@ package cc.brainbook.android.beautytoast;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
@@ -246,11 +247,13 @@ public class BeautyToasty extends ToastyBase {
     public ToastyBase setAnimationIn(final int animationInMode) {
         final View view = getView();
 
+
         if (animationInMode != AnimationUtil.NO_ANIMATION) {
             mOnLayoutChangeListener = new View.OnLayoutChangeListener() {
                 @Override
                 public void onLayoutChange(View view, int left, int top, int right, int bottom,
                                            int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                    Log.d(TAG, "onLayoutChange: ---------------------");
                     view.removeOnLayoutChangeListener(this);
 
                     final int width = view.getMeasuredWidth();

@@ -90,6 +90,7 @@ public class ToastyBase extends AbstractBase {
             ToastyBase.this.cancel();
         }
     };
+
     @Override
     protected void handleShow() {
         if (DEBUG) Log.d(TAG, "ToastBase# handleShow()# ");
@@ -152,6 +153,7 @@ public class ToastyBase extends AbstractBase {
     }
     public ToastyBase setView(View view) {
         mView = view;
+
         return this;
     }
 

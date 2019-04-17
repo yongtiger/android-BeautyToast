@@ -252,7 +252,6 @@ public class BeautyToast extends ToastBase {
                 public void onLayoutChange(View view, int left, int top, int right, int bottom,
                                            int oldLeft, int oldTop, int oldRight, int oldBottom) {
                     view.removeOnLayoutChangeListener(this);
-                    Log.d(TAG, "onLayoutChange: 00000000000000000000000000000000000000000000000");
 
                     final int width = view.getMeasuredWidth();
                     final int height = view.getMeasuredHeight();
@@ -313,7 +312,6 @@ public class BeautyToast extends ToastBase {
                         BeautyToast.super.handleCancel();
                     }
                 });
-                Log.d(TAG, "handleCancel: 111111111111111111111111111111111111111111111111111");
                 animator.setDuration(mAnimationOutDuration);
                 animator.start();
             }
