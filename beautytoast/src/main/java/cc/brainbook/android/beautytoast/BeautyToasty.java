@@ -363,7 +363,7 @@ public class BeautyToasty extends ToastyBase {
         ///判断Target是否已经显示（即Layout完成）
         if (mTarget.get().isShown()) {
             ///在Target旁边显示Toast
-            ToastUtil.setGravityByTarget(mContext, BeautyToasty.this, false,
+            ToastUtil.setGravityByTarget(mContext, BeautyToasty.this, isLayoutFullScreen,
                     getTarget(), targetGravity, targetOffsetX, targetOffsetY);
         } else {
             throw new RuntimeException("The target view has not been laid out");

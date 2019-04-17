@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import cc.brainbook.android.beautytoast.BeautyToast;
 import cc.brainbook.android.beautytoast.ToastBase;
+import cc.brainbook.android.beautytoast.util.AnimationUtil;
 import cc.brainbook.android.beautytoast.util.ToastUtil;
 
 public class MainActivity extends AppCompatActivity {
@@ -26,24 +27,24 @@ public class MainActivity extends AppCompatActivity {
 
 //        /* ========================= 参考对比原生Toast ========================= */
 //        Toast toast = Toast.makeText(getApplicationContext(), "Toast!", Toast.LENGTH_LONG);
-//        toast.setGravity(Gravity.TOP | Gravity.RIGHT, 50, 50);
+//        toast.setGravity(Gravity.TOP | Gravity.RIGHT, 10, 10);
 //        toast.show();
 
 
         /* ========================= ToastBase ========================= */
 
         /* -------------------- makeText -------------------- */
-//        ToastBase toastBase = ToastBase.makeText(getApplicationContext(),"ToastBase!", ToastBase.LENGTH_SHORT);
+        ToastBase toastBase = ToastBase.makeText(getApplicationContext(),"ToastBase!", ToastBase.LENGTH_SHORT);
 //        ToastBase toastBase = ToastBase.makeText(getApplicationContext(),"ToastBase!", ToastBase.LENGTH_LONG);
 //        ToastBase toastBase = ToastBase.makeText(getApplicationContext(),"ToastBase!", 15000);
 //        ToastBase toastBase = ToastBase.makeText(this,"ToastBase!", 15000);   ///测试销毁时是否内存泄漏
 
-//        toastBase.setText("ToastBase!!");
-//
+        toastBase.setText("ToastBase!!");
+
 //        toastBase.isGravityFullScreen(true);///注意：只针对Gravity.TOP！且必须API 16+！
-//        toastBase.setGravity(Gravity.TOP | Gravity.RIGHT, 10, 10);
-//
-//        toastBase.show();
+        toastBase.setGravity(Gravity.TOP | Gravity.RIGHT, 10, 10);
+
+        toastBase.show();
 
 
         /* -------------------- new -------------------- */
@@ -72,19 +73,19 @@ public class MainActivity extends AppCompatActivity {
 //        BeautyToast beautyToast = BeautyToast.makeText(getApplicationContext(),"BeautyToast!", 15000);
 //        BeautyToast beautyToast = BeautyToast.makeText(this,"ToastBase!", 15000);   ///测试销毁时是否内存泄漏
 //
-        BeautyToast beautyToast = BeautyToast.makeWarningText(getApplicationContext(),"WarningBeautyToast!", BeautyToast.LENGTH_SHORT);
+//        BeautyToast beautyToast = BeautyToast.makeWarningText(getApplicationContext(),"WarningBeautyToast!", BeautyToast.LENGTH_SHORT);
 //        BeautyToast beautyToast = BeautyToast.makeInfoText(getApplicationContext(),"Info BeautyToast!", BeautyToast.LENGTH_SHORT);
 //        BeautyToast beautyToast = BeautyToast.makeSuccessText(getApplicationContext(),"Success BeautyToast!", BeautyToast.LENGTH_SHORT);
 //        BeautyToast beautyToast = BeautyToast.makeErrorText(getApplicationContext(),"Error BeautyToast!", BeautyToast.LENGTH_SHORT);
 
-        beautyToast.isShowIcon(true);
-
-        beautyToast.setText("BeautyToast!!");
-
-//        beautyToast.isGravityFullScreen(true);///注意：只针对Gravity.TOP！且必须API 16+！
-        beautyToast.setGravity(Gravity.TOP | Gravity.RIGHT, 10, 10);
-
-        beautyToast.show();
+//        beautyToast.isShowIcon(true);
+//
+//        beautyToast.setText("BeautyToast!!");
+//
+////        beautyToast.isGravityFullScreen(true);///注意：只针对Gravity.TOP！且必须API 16+！
+//        beautyToast.setGravity(Gravity.TOP | Gravity.RIGHT, 10, 10);
+//
+//        beautyToast.show();
 
 
         /* -------------------- new -------------------- */
@@ -103,9 +104,9 @@ public class MainActivity extends AppCompatActivity {
 //        beautyToast.setDuration(BeautyToast.LENGTH_LONG);
 //
 //        ///设置圆角弧度
-//        beautyToast.setGradientDrawableCornerRadius(HALF_HEIGHT_CORNER_RADIUS);
-////        beautyToast.setGradientDrawableCornerRadius(HALF_HEIGHT_CORNER_RADIUS / 4); ///test
-////        beautyToast.setGradientDrawableCornerRadius(10);    ///test
+////        beautyToast.setGradientDrawableCornerRadius(BeautyToast.HALF_HEIGHT_CORNER_RADIUS);
+////        beautyToast.setGradientDrawableCornerRadius(BeautyToast.HALF_HEIGHT_CORNER_RADIUS / 4); ///test
+//        beautyToast.setGradientDrawableCornerRadius(10);    ///test
 //        /* --- 获得并设置View、TextView、ImageView --- */
 //
 //        beautyToast.setText("new BeautyToast!");
@@ -171,13 +172,14 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
 
         ///注意：当Context（如Activity/Fragment等）销毁时必须调用此方法，避免内存泄漏！
-        ToastBase.clear(this);
+//        ToastBase.clear(this);
     }
 
     public void btn1Click(View view) {
-//        ToastBase toastBase = ToastBase.makeText(getApplicationContext(),"ToastBase!", 3500);
-//        toastBase = ToastBase.makeText(this,"ToastBase!", 35000);
+////        ToastBase toastBase = ToastBase.makeText(getApplicationContext(),"ToastBase!", 3500);
+//        ToastBase toastBase = ToastBase.makeText(this,"ToastBase!", 3500);
 //        toastBase.show();
+
 
         /* -------------------- target -------------------- */
 //        BeautyToast beautyToast = BeautyToast.makeText(getApplicationContext(),"BeautyToast! target1", BeautyToast.LENGTH_LONG);
@@ -185,9 +187,27 @@ public class MainActivity extends AppCompatActivity {
 //        BeautyToast beautyToast = BeautyToast.makeInfoText(getApplicationContext(),"Info BeautyToast!", BeautyToast.LENGTH_SHORT);
 //        BeautyToast beautyToast = BeautyToast.makeSuccessText(getApplicationContext(),"Success BeautyToast!", BeautyToast.LENGTH_SHORT);
 //        BeautyToast beautyToast = BeautyToast.makeErrorText(getApplicationContext(),"Error BeautyToast!", BeautyToast.LENGTH_SHORT);
+
 //        beautyToast.isGravityFullScreen(true);///注意：只针对Gravity.TOP！且必须API 16+！
+
         ///注意：Target必须已经显示（即Layout完成），否则抛出异常！比如不能在Activity的onCreate()中调用本方法
 //        beautyToast.setTarget(target1, ToastUtil.GRAVITY_ABOVE_TARGET, 0, 0);
+
+        ///AnimationIn 入场动画
+//        beautyToast.setAnimationIn(AnimationUtil.ANIMATION_LEFT_IN);
+//        beautyToast.setAnimationIn(AnimationUtil.ANIMATION_TOP_IN);
+//        beautyToast.setAnimationIn(AnimationUtil.ANIMATION_RIGHT_IN);
+//        beautyToast.setAnimationIn(AnimationUtil.ANIMATION_BOTTOM_IN);
+//        beautyToast.setAnimationIn(AnimationUtil.ANIMATION_FADE_IN);
+        ///AnimationOut 出场动画
+//        beautyToast.setAnimationOut(AnimationUtil.ANIMATION_LEFT_OUT);
+//        beautyToast.setAnimationOut(AnimationUtil.ANIMATION_TOP_OUT);
+//        beautyToast.setAnimationOut(AnimationUtil.ANIMATION_RIGHT_OUT);
+//        beautyToast.setAnimationOut(AnimationUtil.ANIMATION_BOTTOM_OUT);
+//        beautyToast.setAnimationOut(AnimationUtil.ANIMATION_FADE_OUT);
+        ///取消动画
+//        beautyToast.setAnimationOut(AnimationUtil.NO_ANIMATION);
+
 //        beautyToast.show();
     }
 
