@@ -40,10 +40,10 @@ public class MainActivity extends AppCompatActivity {
 //        ToastBase toastBase = ToastBase.makeText(this,"ToastBase!", 15000);   ///测试销毁时是否内存泄漏
 
 //        toastBase.setText("ToastBase!!");
-//
-////        toastBase.isGravityFullScreen(true);///注意：只针对Gravity.TOP！且必须API 16+！
+////
+//        toastBase.isGravityFullScreen(true);///注意：只针对Gravity.TOP！且必须API 16+！
 //        toastBase.setGravity(Gravity.TOP | Gravity.RIGHT, 10, 10);
-//
+////
 //        toastBase.show();
 
 
@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         /* ========================= BeautyToast ========================= */
 
         /* -------------------- makeText -------------------- */
-        BeautyToast beautyToast = BeautyToast.makeText(getApplicationContext(),"BeautyToast!", BeautyToast.LENGTH_SHORT);
+//        BeautyToast beautyToast = BeautyToast.makeText(getApplicationContext(),"BeautyToast!", BeautyToast.LENGTH_SHORT);
 //        BeautyToast beautyToast = BeautyToast.makeText(getApplicationContext(),"BeautyToast!", BeautyToast.LENGTH_LONG);
 //        BeautyToast beautyToast = BeautyToast.makeText(getApplicationContext(),"BeautyToast!", 15000);
 //        BeautyToast beautyToast = BeautyToast.makeText(this,"ToastBase!", 5000);   ///测试销毁时是否内存泄漏
@@ -76,9 +76,9 @@ public class MainActivity extends AppCompatActivity {
 //        BeautyToast beautyToast = BeautyToast.makeWarningText(getApplicationContext(),"WarningBeautyToast!", BeautyToast.LENGTH_SHORT);
 //        BeautyToast beautyToast = BeautyToast.makeInfoText(getApplicationContext(),"Info BeautyToast!", BeautyToast.LENGTH_SHORT);
 //        BeautyToast beautyToast = BeautyToast.makeSuccessText(getApplicationContext(),"Success BeautyToast!", BeautyToast.LENGTH_SHORT);
-//        BeautyToast beautyToast = BeautyToast.makeErrorText(getApplicationContext(),"Error BeautyToast!", BeautyToast.LENGTH_SHORT);
+        BeautyToast beautyToast = BeautyToast.makeErrorText(getApplicationContext(),"Error BeautyToast!", BeautyToast.LENGTH_SHORT);
 
-//        beautyToast.isShowIcon(true);
+//        beautyToast.isShowIcon(false);
 //
 //        beautyToast.setText("BeautyToast!!");
 //

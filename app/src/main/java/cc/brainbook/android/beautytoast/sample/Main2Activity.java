@@ -73,7 +73,7 @@ public class Main2Activity extends AppCompatActivity {
         /* ========================= BeautyToasty ========================= */
 
         /* -------------------- makeText -------------------- */
-        BeautyToasty beautyToasty = BeautyToasty.makeText(getApplicationContext(),"BeautyToasty!", BeautyToasty.LENGTH_SHORT);
+//        BeautyToasty beautyToasty = BeautyToasty.makeText(getApplicationContext(),"BeautyToasty!", BeautyToasty.LENGTH_SHORT);
 //        BeautyToasty beautyToasty = BeautyToasty.makeText(getApplicationContext(),"BeautyToasty!", BeautyToasty.LENGTH_LONG);
 //        BeautyToasty beautyToasty = BeautyToasty.makeText(getApplicationContext(),"BeautyToasty!", 15000);
 //        BeautyToasty beautyToasty = BeautyToasty.makeText(this,"ToastyBase!", 5000);   ///测试销毁时是否内存泄漏
@@ -81,7 +81,7 @@ public class Main2Activity extends AppCompatActivity {
 //        BeautyToasty beautyToasty = BeautyToasty.makeWarningText(getApplicationContext(),"WarningBeautyToasty!", BeautyToasty.LENGTH_SHORT);
 //        BeautyToasty beautyToasty = BeautyToasty.makeInfoText(getApplicationContext(),"Info BeautyToasty!", BeautyToasty.LENGTH_SHORT);
 //        BeautyToasty beautyToasty = BeautyToasty.makeSuccessText(getApplicationContext(),"Success BeautyToasty!", BeautyToasty.LENGTH_SHORT);
-//        BeautyToasty beautyToasty = BeautyToasty.makeErrorText(getApplicationContext(),"Error BeautyToasty!", BeautyToasty.LENGTH_SHORT);
+        BeautyToasty beautyToasty = BeautyToasty.makeErrorText(getApplicationContext(),"Error BeautyToasty!", BeautyToasty.LENGTH_SHORT);
 
 //        beautyToasty.isShowIcon(false);
 //
@@ -197,7 +197,7 @@ public class Main2Activity extends AppCompatActivity {
 //        BeautyToasty beautyToasty = BeautyToasty.makeErrorText(getApplicationContext(), "Error BeautyToasty!", BeautyToasty.LENGTH_SHORT);
 
         ///注意：Target必须已经显示（即Layout完成），否则抛出异常！比如不能在Activity的onCreate()中调用本方法
-//        beautyToasty.setTarget(target1, ToastUtil.GRAVITY_ABOVE_TARGET, 0, 0);
+        beautyToasty.setTarget(target1, ToastUtil.GRAVITY_ABOVE_TARGET, 0, 0);
 
         ///AnimationIn 入场动画
         beautyToasty.setAnimationIn(AnimationUtil.ANIMATION_LEFT_IN);
