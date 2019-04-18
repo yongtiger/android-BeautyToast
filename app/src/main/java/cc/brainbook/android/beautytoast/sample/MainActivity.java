@@ -68,10 +68,10 @@ public class MainActivity extends AppCompatActivity {
         /* ========================= BeautyToast ========================= */
 
         /* -------------------- makeText -------------------- */
-//        BeautyToast beautyToast = BeautyToast.makeText(getApplicationContext(),"BeautyToast!", BeautyToast.LENGTH_SHORT);
+        BeautyToast beautyToast = BeautyToast.makeText(getApplicationContext(),"BeautyToast!", BeautyToast.LENGTH_SHORT);
 //        BeautyToast beautyToast = BeautyToast.makeText(getApplicationContext(),"BeautyToast!", BeautyToast.LENGTH_LONG);
 //        BeautyToast beautyToast = BeautyToast.makeText(getApplicationContext(),"BeautyToast!", 15000);
-        BeautyToast beautyToast = BeautyToast.makeText(this,"ToastBase!", 5000);   ///测试销毁时是否内存泄漏
+//        BeautyToast beautyToast = BeautyToast.makeText(this,"ToastBase!", 5000);   ///测试销毁时是否内存泄漏
 //
 //        BeautyToast beautyToast = BeautyToast.makeWarningText(getApplicationContext(),"WarningBeautyToast!", BeautyToast.LENGTH_SHORT);
 //        BeautyToast beautyToast = BeautyToast.makeInfoText(getApplicationContext(),"Info BeautyToast!", BeautyToast.LENGTH_SHORT);

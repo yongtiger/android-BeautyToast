@@ -243,21 +243,31 @@ public class BeautyToast extends ToastBase {
         return this;
     }
     private View.OnLayoutChangeListener mOnLayoutChangeListener;
+    private int mAnimationInMode = AnimationUtil.NO_ANIMATION;
     public ToastBase setAnimationIn(final int animationInMode) {
+        ///如果已经设置了入场动画，只能取消，不能重复再设置！否则抛出异常
+        if (mAnimationInMode != AnimationUtil.NO_ANIMATION && animationInMode != AnimationUtil.NO_ANIMATION) {
+            throw new RuntimeException("mAnimationInMode has already been set");
+        }
+
+        mAnimationInMode = animationInMode;
+
         final View view = getView();
 
-        if (animationInMode != AnimationUtil.NO_ANIMATION) {
+        if (mAnimationInMode != AnimationUtil.NO_ANIMATION) {
             mOnLayoutChangeListener = new View.OnLayoutChangeListener() {
                 @Override
                 public void onLayoutChange(View view, int left, int top, int right, int bottom,
                                            int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                    if (DEBUG) Log.d(TAG, "onLayoutChange()# ");
+
                     view.removeOnLayoutChangeListener(this);
 
                     final int width = view.getMeasuredWidth();
                     final int height = view.getMeasuredHeight();
 
                     ///根据动画方式获取ObjectAnimator对象
-                    final ObjectAnimator animator = AnimationUtil.getAnimatorByMode(animationInMode, view, width, height);
+                    final ObjectAnimator animator = AnimationUtil.getAnimatorByMode(mAnimationInMode, view, width, height);
                     if (animator != null) {
                         animator.setDuration(mAnimationInDuration);
                         animator.start();
@@ -286,6 +296,11 @@ public class BeautyToast extends ToastBase {
         mAnimationOutMode = animationOutMode;
 
         return this;
+    }
+
+    ///是否有动画
+    public boolean hasAnimation() {
+        return mAnimationInMode != AnimationUtil.NO_ANIMATION || mAnimationOutMode != AnimationUtil.NO_ANIMATION;
     }
     /* ---------------- 动画 ---------------- */
 
