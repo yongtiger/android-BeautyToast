@@ -6,6 +6,7 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
@@ -13,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import java.lang.ref.WeakReference;
 
@@ -291,9 +293,17 @@ public class BeautyToast extends ToastBase {
 
         return this;
     }
+    private ObjectAnimator mAnimationOut;
     private int mAnimationOutMode;
     public ToastBase setAnimationOut(final int animationOutMode) {
         mAnimationOutMode = animationOutMode;
+
+        final View view = getView();
+        final int width = view.getMeasuredWidth();
+        final int height = view.getMeasuredHeight();
+
+        ///根据动画方式获取ObjectAnimator对象
+        mAnimationOut = AnimationUtil.getAnimatorByMode(mAnimationOutMode, view, width, height);
 
         return this;
     }
@@ -305,38 +315,7 @@ public class BeautyToast extends ToastBase {
     /* ---------------- 动画 ---------------- */
 
 
-    @Override
-    protected void handleCancel() {
-        if (DEBUG) Log.d(TAG, "BeautyToast# handleCancel()# ");
-
-        ///view: AnimationOut 出场动画
-        if (mAnimationOutMode != AnimationUtil.NO_ANIMATION) {
-            final View view = getView();
-            final int width = view.getMeasuredWidth();
-            final int height = view.getMeasuredHeight();
-
-            ///根据动画方式获取ObjectAnimator对象
-            final ObjectAnimator animator = AnimationUtil.getAnimatorByMode(mAnimationOutMode, view, width, height);
-            if (animator != null) {
-                animator.addListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        super.onAnimationEnd(animation);
-
-                        ///出场动画后再执行Toast的cancel
-                        BeautyToast.super.handleCancel();
-                    }
-                });
-                animator.setDuration(mAnimationOutDuration);
-                animator.start();
-            }
-        } else {
-            ///执行Toast的cancel
-            BeautyToast.super.handleCancel();
-        }
-    }
-
-    ///target
+    /* ---------------- target ---------------- */
     private WeakReference<View> mTarget;    ///避免Activity关闭后造成的内存泄漏！
     public View getTarget() {
         return mTarget.get();
@@ -365,10 +344,55 @@ public class BeautyToast extends ToastBase {
             ToastUtil.setGravityByTarget(mContext, BeautyToast.this, isLayoutFullScreen,
                     getTarget(), targetGravity, targetOffsetX, targetOffsetY);
         } else {
-            throw new RuntimeException("The target view has not been laid out");
+            throw new RuntimeException("target view has not been laid out");
         }
 
         return this;
+    }
+    /* ---------------- target ---------------- */
+
+
+    @Override
+    protected void handleCancel() {
+        if (DEBUG) Log.d(TAG, "handleCancel()# ");
+
+        ///view: AnimationOut 出场动画
+        if (mAnimationOutMode != AnimationUtil.NO_ANIMATION) {
+            if (mAnimationOut != null) {
+                mAnimationOut.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+
+                        ///出场动画后再执行Toast的cancel
+                        BeautyToast.super.handleCancel();
+                    }
+                });
+                mAnimationOut.setDuration(mAnimationOutDuration);
+                mAnimationOut.start();
+            }
+        } else {
+            ///执行Toast的cancel
+            BeautyToast.super.handleCancel();
+        }
+    }
+
+    /**
+     * 调整View
+     *
+     * 注意：Android 4.x (API level 20及以下)WindowManager使用getApplicationContext().getSystemService(Context.WINDOW_SERVICE)时，
+     * 需要在原有动画的View外面再嵌套一层，否则动画失效！
+     */
+    @Override
+    protected void adjustView() {
+        if (hasAnimation() && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            final View view = getView();
+
+            final LinearLayout ll = new LinearLayout(mContext);
+            ll.addView(view);
+
+            setView(ll);
+        }
     }
 
 }

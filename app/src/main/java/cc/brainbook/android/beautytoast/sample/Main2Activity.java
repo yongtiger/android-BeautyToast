@@ -76,7 +76,6 @@ public class Main2Activity extends AppCompatActivity {
         BeautyToasty beautyToasty = BeautyToasty.makeText(getApplicationContext(),"BeautyToasty!", BeautyToasty.LENGTH_SHORT);
 //        BeautyToasty beautyToasty = BeautyToasty.makeText(getApplicationContext(),"BeautyToasty!", BeautyToasty.LENGTH_LONG);
 //        BeautyToasty beautyToasty = BeautyToasty.makeText(getApplicationContext(),"BeautyToasty!", 15000);
-//        BeautyToasty beautyToasty = BeautyToasty.makeText(getApplicationContext(),"BeautyToasty!", 15000);
 //        BeautyToasty beautyToasty = BeautyToasty.makeText(this,"ToastyBase!", 5000);   ///测试销毁时是否内存泄漏
 
 //        BeautyToasty beautyToasty = BeautyToasty.makeWarningText(getApplicationContext(),"WarningBeautyToasty!", BeautyToasty.LENGTH_SHORT);
@@ -190,11 +189,12 @@ public class Main2Activity extends AppCompatActivity {
 
 
         /* -------------------- target -------------------- */
-        BeautyToasty beautyToasty = BeautyToasty.makeText(getApplicationContext(),"BeautyToasty!", BeautyToasty.LENGTH_LONG);
-//        BeautyToasty beautyToasty = BeautyToasty.makeWarningText(getApplicationContext(),"WarningBeautyToasty!", BeautyToasty.LENGTH_SHORT);
-//        BeautyToasty beautyToasty = BeautyToasty.makeInfoText(getApplicationContext(),"Info BeautyToasty!", BeautyToasty.LENGTH_SHORT);
-//        BeautyToasty beautyToasty = BeautyToasty.makeSuccessText(getApplicationContext(),"Success BeautyToasty!", BeautyToasty.LENGTH_SHORT);
-//        BeautyToasty beautyToasty = BeautyToasty.makeErrorText(getApplicationContext(),"Error BeautyToasty!", BeautyToasty.LENGTH_SHORT);
+        BeautyToasty beautyToasty = BeautyToasty.makeText(getApplicationContext(), "BeautyToasty!", BeautyToasty.LENGTH_LONG);
+//        BeautyToasty beautyToasty = BeautyToasty.makeText(this, "BeautyToasty!", BeautyToasty.LENGTH_LONG);
+//        BeautyToasty beautyToasty = BeautyToasty.makeWarningText(getApplicationContext(), "WarningBeautyToasty!", BeautyToasty.LENGTH_SHORT);
+//        BeautyToasty beautyToasty = BeautyToasty.makeInfoText(getApplicationContext(), "Info BeautyToasty!", BeautyToasty.LENGTH_SHORT);
+//        BeautyToasty beautyToasty = BeautyToasty.makeSuccessText(getApplicationContext(), "Success BeautyToasty!", BeautyToasty.LENGTH_SHORT);
+//        BeautyToasty beautyToasty = BeautyToasty.makeErrorText(getApplicationContext(), "Error BeautyToasty!", BeautyToasty.LENGTH_SHORT);
 
         ///注意：Target必须已经显示（即Layout完成），否则抛出异常！比如不能在Activity的onCreate()中调用本方法
 //        beautyToasty.setTarget(target1, ToastUtil.GRAVITY_ABOVE_TARGET, 0, 0);
@@ -205,12 +205,16 @@ public class Main2Activity extends AppCompatActivity {
 //        beautyToasty.setAnimationIn(AnimationUtil.ANIMATION_RIGHT_IN);
 //        beautyToasty.setAnimationIn(AnimationUtil.ANIMATION_BOTTOM_IN);
 //        beautyToasty.setAnimationIn(AnimationUtil.ANIMATION_FADE_IN);
+        ///取消动画
+//        beautyToasty.setAnimationIn(AnimationUtil.NO_ANIMATION);
         ///AnimationOut 出场动画
-//        beautyToasty.setAnimationOut(AnimationUtil.ANIMATION_LEFT_OUT);
+        beautyToasty.setAnimationOut(AnimationUtil.ANIMATION_LEFT_OUT);
 //        beautyToasty.setAnimationOut(AnimationUtil.ANIMATION_TOP_OUT);
 //        beautyToasty.setAnimationOut(AnimationUtil.ANIMATION_RIGHT_OUT);
 //        beautyToasty.setAnimationOut(AnimationUtil.ANIMATION_BOTTOM_OUT);
 //        beautyToasty.setAnimationOut(AnimationUtil.ANIMATION_FADE_OUT);
+        ///取消动画
+//        beautyToasty.setAnimationOut(AnimationUtil.NO_ANIMATION);
 
         beautyToasty.show();
 

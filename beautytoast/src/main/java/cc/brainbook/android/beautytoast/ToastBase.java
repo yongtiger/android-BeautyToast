@@ -55,7 +55,10 @@ public class ToastBase extends AbstractBase {
 
     @Override
     protected void handleShow() {
-        if (DEBUG) Log.d(TAG, "ToastBase# handleShow()# ");
+        if (DEBUG) Log.d(TAG, "handleShow()# ");
+
+        ///调整View
+        adjustView();
 
         ///[UPGRADE#Duration可随意选择]用CountDownTimer重复显示Toast实现自定义Toast显示时长
         ///[FIX#设置Toast为LENGTH_LONG，避免CountDownTimer的onTick()到期时仍会显示Toast淡出动画]
@@ -71,7 +74,7 @@ public class ToastBase extends AbstractBase {
         mCountDownTimer = new CountDownTimer(mDuration, countDownInterval) {   ///CountDownTimer的onTick()的周期为LENGTH_SHORT即可
             @Override
             public void onTick(long millisUntilFinished) {
-                if (DEBUG) Log.d(TAG, "ToastBase# handleShow()# CountDownTimer.onTick()# millisUntilFinished: " + millisUntilFinished);
+                if (DEBUG) Log.d(TAG, "handleShow()# CountDownTimer.onTick()# millisUntilFinished: " + millisUntilFinished);
 
                 ///[FIX BUG#关闭通知权限后Toast无法显示]
                 if(ToastUtil.isNotificationEnabled(mContext)){
@@ -83,7 +86,7 @@ public class ToastBase extends AbstractBase {
 
             @Override
             public void onFinish() {
-                if (DEBUG) Log.d(TAG, "ToastBase# handleShow()# CountDownTimer.onFinish()# ");
+                if (DEBUG) Log.d(TAG, "handleShow()# CountDownTimer.onFinish()# ");
 
                 ///取消Toast
                 ToastBase.this.cancel();
@@ -94,7 +97,7 @@ public class ToastBase extends AbstractBase {
 
     @Override
     protected void handleCancel() {
-        if (DEBUG) Log.d(TAG, "ToastBase# handleCancel()# ");
+        if (DEBUG) Log.d(TAG, "handleCancel()# ");
 
         ///取消显示Toast
         if (mToast != null) {
@@ -106,6 +109,11 @@ public class ToastBase extends AbstractBase {
             mCountDownTimer.cancel();
         }
     }
+
+    /**
+     * 调整View
+     */
+    protected void adjustView() {}
 
 
     /* ---------------- 动态方法：参照Toast源码 ---------------- */

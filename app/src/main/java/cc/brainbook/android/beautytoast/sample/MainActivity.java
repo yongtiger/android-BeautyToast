@@ -182,16 +182,17 @@ public class MainActivity extends AppCompatActivity {
 
 
         /* -------------------- target -------------------- */
-        BeautyToast beautyToast = BeautyToast.makeText(this,"BeautyToast! target1", BeautyToast.LENGTH_LONG);
-//        BeautyToast beautyToast = BeautyToast.makeWarningText(getApplicationContext(),"WarningBeautyToast!", BeautyToast.LENGTH_SHORT);
-//        BeautyToast beautyToast = BeautyToast.makeInfoText(getApplicationContext(),"Info BeautyToast!", BeautyToast.LENGTH_SHORT);
-//        BeautyToast beautyToast = BeautyToast.makeSuccessText(getApplicationContext(),"Success BeautyToast!", BeautyToast.LENGTH_SHORT);
-//        BeautyToast beautyToast = BeautyToast.makeErrorText(getApplicationContext(),"Error BeautyToast!", BeautyToast.LENGTH_SHORT);
+        BeautyToast beautyToast = BeautyToast.makeText(getApplicationContext(), "BeautyToast! target1", BeautyToast.LENGTH_LONG);
+//        BeautyToast beautyToast = BeautyToast.makeText(this, "BeautyToast! target1", BeautyToast.LENGTH_LONG);
+//        BeautyToast beautyToast = BeautyToast.makeWarningText(getApplicationContext(), "WarningBeautyToast!", BeautyToast.LENGTH_SHORT);
+//        BeautyToast beautyToast = BeautyToast.makeInfoText(getApplicationContext(), "Info BeautyToast!", BeautyToast.LENGTH_SHORT);
+//        BeautyToast beautyToast = BeautyToast.makeSuccessText(getApplicationContext(), "Success BeautyToast!", BeautyToast.LENGTH_SHORT);
+//        BeautyToast beautyToast = BeautyToast.makeErrorText(getApplicationContext(), "Error BeautyToast!", BeautyToast.LENGTH_SHORT);
 
 //        beautyToast.isGravityFullScreen(true);///注意：只针对Gravity.TOP！且必须API 16+！
 
         ///注意：Target必须已经显示（即Layout完成），否则抛出异常！比如不能在Activity的onCreate()中调用本方法
-//        beautyToast.setTarget(target1, ToastUtil.GRAVITY_ABOVE_TARGET, 0, 0);
+        beautyToast.setTarget(target1, ToastUtil.GRAVITY_ABOVE_TARGET, 0, 0);
 
         ///AnimationIn 入场动画
         beautyToast.setAnimationIn(AnimationUtil.ANIMATION_LEFT_IN);
@@ -199,6 +200,8 @@ public class MainActivity extends AppCompatActivity {
 //        beautyToast.setAnimationIn(AnimationUtil.ANIMATION_RIGHT_IN);
 //        beautyToast.setAnimationIn(AnimationUtil.ANIMATION_BOTTOM_IN);
 //        beautyToast.setAnimationIn(AnimationUtil.ANIMATION_FADE_IN);
+        ///取消动画
+//        beautyToast.setAnimationIn(AnimationUtil.NO_ANIMATION);
         ///AnimationOut 出场动画
         beautyToast.setAnimationOut(AnimationUtil.ANIMATION_LEFT_OUT);
 //        beautyToast.setAnimationOut(AnimationUtil.ANIMATION_TOP_OUT);

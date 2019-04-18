@@ -56,7 +56,7 @@ public class ToastyBase extends AbstractBase {
     }
 
     ///ToastyLayoutParams
-    protected WindowManager.LayoutParams mToastyLayoutParams;
+    private WindowManager.LayoutParams mToastyLayoutParams;
     private WindowManager.LayoutParams getDefaultToastyLayoutParams() {
         final WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
 
@@ -84,8 +84,6 @@ public class ToastyBase extends AbstractBase {
     private Runnable mRunnable = new Runnable() {
         @Override
         public void run() {
-            if (DEBUG) Log.d(TAG, "ToastBase# handleShow()# CountDownTimer.onFinish()# ");
-
             ///取消Toasty
             ToastyBase.this.cancel();
         }
@@ -93,7 +91,10 @@ public class ToastyBase extends AbstractBase {
 
     @Override
     protected void handleShow() {
-        if (DEBUG) Log.d(TAG, "ToastBase# handleShow()# ");
+        if (DEBUG) Log.d(TAG, "handleShow()# ");
+
+        ///调整View
+        adjustView();
 
         ///显示Toasty
         final WindowManager windowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
@@ -105,7 +106,7 @@ public class ToastyBase extends AbstractBase {
 
     @Override
     protected void handleCancel() {
-        if (DEBUG) Log.d(TAG, "ToastBase# handleCancel()# ");
+        if (DEBUG) Log.d(TAG, "handleCancel()# ");
 
         if (mView != null) {
             ///取消显示Toasty
@@ -115,6 +116,11 @@ public class ToastyBase extends AbstractBase {
 
         mHandler.removeCallbacks(mRunnable);
     }
+
+    /**
+     * 调整View
+     */
+    protected void adjustView() {}
 
 
     /* ---------------- 动态方法：参照Toast源码 ---------------- */
