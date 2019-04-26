@@ -7,6 +7,8 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Toast;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -57,8 +59,12 @@ public class ToastUtil {
 
         toast.setGravity(Gravity.CENTER, toastLocation[0], toastLocation[1]);
     }
-    private static int[] calToastLocation(Context context, View toastView, View target, int targetGravity, boolean isLayoutFullScreen,
-                            int targetOffsetX, int targetOffsetY) {
+    private static int[] calToastLocation(@NotNull Context context,
+                                          @NotNull View toastView,
+                                          @NotNull View target,
+                                          int targetGravity,
+                                          boolean isLayoutFullScreen,
+                                          int targetOffsetX, int targetOffsetY) {
         toastView.measure(0,0);  ///[FIX#使用带icon的BeautyToast时显示错位！]
 
         final int toastHalfWidth = toastView.getMeasuredWidth() / 2;
@@ -107,7 +113,7 @@ public class ToastUtil {
         ///Toast非全屏显示时，需要调整setGravity()的toastLocation[1]
         ///Toast默认Gravity的坐标系不包含状态栏（即非全屏)，与BeautyToast中Target产生高度上的错位！
         if (!isLayoutFullScreen) {
-            final int statusBarHeight = getStatusBarHeight(context);
+            final int statusBarHeight = getStatusBarHeightPixelSize(context);
             if (statusBarHeight != -1) {
                 toastLocation[1] -= statusBarHeight / 2;
             }
@@ -125,7 +131,7 @@ public class ToastUtil {
      * @param context
      * @return
      */
-    public static int getToastOffsetY(Context context) {
+    public static int getToastOffsetY(@NotNull Context context) {
         int i = Resources.getSystem().getIdentifier("toast_y_offset", "dimen", "android");
         return context.getResources().getDimensionPixelSize(i);
     }
@@ -139,7 +145,7 @@ public class ToastUtil {
      * @param context
      * @return  -1：代表未获取成功
      */
-    public static int getStatusBarHeight(Context context) {
+    public static int getStatusBarHeightPixelSize(@NotNull Context context) {
         int statusBarHeight = -1;
 
         //获取status_bar_height资源的ID
@@ -150,6 +156,44 @@ public class ToastUtil {
         }
 
         return statusBarHeight;
+    }
+    public static float getStatusBarHeight(@NotNull Context context) {
+        float statusBarHeight = -1.0f;
+
+        //获取status_bar_height资源的ID
+        final int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            //根据资源ID获取响应的尺寸值
+            statusBarHeight = context.getResources().getDimension(resourceId);
+        }
+
+        return statusBarHeight;
+    }
+
+    public static int getNavigationBarHeightPixelSize(@NotNull Context context) {
+        int navigationBarHeight = -1;
+
+        //获取status_bar_height资源的ID
+        final int resourceId = context.getResources().getIdentifier("navigation_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            //根据资源ID获取响应的尺寸值
+            navigationBarHeight = context.getResources().getDimensionPixelSize(resourceId);
+        }
+
+        return navigationBarHeight;
+    }
+
+    public static float getNavigationBarHeight(@NotNull Context context) {
+        float navigationBarHeight = -1.0f;
+
+        //获取status_bar_height资源的ID
+        final int resourceId = context.getResources().getIdentifier("navigation_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            //根据资源ID获取响应的尺寸值
+            navigationBarHeight = context.getResources().getDimension(resourceId);
+        }
+
+        return navigationBarHeight;
     }
 
     ///[FIX BUG#关闭通知权限后Toast无法显示]
