@@ -88,6 +88,11 @@ public class BeautyToasty extends ToastyBase {
         return beautyToasty;
     }
 
+    public static BeautyToasty makeWarningText(Context context, @StringRes int resId, long duration)
+            throws Resources.NotFoundException {
+        return makeText(context, context.getResources().getText(resId), duration);
+    }
+
     public static BeautyToasty makeInfoText(Context context, CharSequence text, long duration) {
         final BeautyToasty beautyToasty = makeText(context, text, duration);
 
@@ -101,6 +106,11 @@ public class BeautyToasty extends ToastyBase {
         beautyToasty.isShowIcon(true);
 
         return beautyToasty;
+    }
+
+    public static BeautyToasty makeInfoText(Context context, @StringRes int resId, long duration)
+            throws Resources.NotFoundException {
+        return makeText(context, context.getResources().getText(resId), duration);
     }
 
     public static BeautyToasty makeSuccessText(Context context, CharSequence text, long duration) {
@@ -118,6 +128,11 @@ public class BeautyToasty extends ToastyBase {
         return beautyToasty;
     }
 
+    public static BeautyToasty makeSuccessText(Context context, @StringRes int resId, long duration)
+            throws Resources.NotFoundException {
+        return makeText(context, context.getResources().getText(resId), duration);
+    }
+
     public static BeautyToasty makeErrorText(Context context, CharSequence text, long duration) {
         final BeautyToasty beautyToasty = makeText(context, text, duration);
 
@@ -132,6 +147,12 @@ public class BeautyToasty extends ToastyBase {
 
         return beautyToasty;
     }
+
+    public static BeautyToasty makeErrorText(Context context, @StringRes int resId, long duration)
+            throws Resources.NotFoundException {
+        return makeText(context, context.getResources().getText(resId), duration);
+    }
+
 
     public BeautyToasty(Context context) {
         super(context);

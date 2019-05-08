@@ -87,6 +87,11 @@ public class BeautyToast extends ToastBase {
         return beautyToast;
     }
 
+    public static BeautyToast makeWarningText(Context context, @StringRes int resId, long duration)
+            throws Resources.NotFoundException {
+        return makeText(context, context.getResources().getText(resId), duration);
+    }
+
     public static BeautyToast makeInfoText(Context context, CharSequence text, long duration) {
         final BeautyToast beautyToast = makeText(context, text, duration);
 
@@ -100,6 +105,11 @@ public class BeautyToast extends ToastBase {
         beautyToast.isShowIcon(true);
 
         return beautyToast;
+    }
+
+    public static BeautyToast makeInfoText(Context context, @StringRes int resId, long duration)
+            throws Resources.NotFoundException {
+        return makeText(context, context.getResources().getText(resId), duration);
     }
 
     public static BeautyToast makeSuccessText(Context context, CharSequence text, long duration) {
@@ -117,6 +127,11 @@ public class BeautyToast extends ToastBase {
         return beautyToast;
     }
 
+    public static BeautyToast makeSuccessText(Context context, @StringRes int resId, long duration)
+            throws Resources.NotFoundException {
+        return makeText(context, context.getResources().getText(resId), duration);
+    }
+
     public static BeautyToast makeErrorText(Context context, CharSequence text, long duration) {
         final BeautyToast beautyToast = makeText(context, text, duration);
 
@@ -130,6 +145,11 @@ public class BeautyToast extends ToastBase {
         beautyToast.isShowIcon(true);
 
         return beautyToast;
+    }
+
+    public static BeautyToast makeErrorText(Context context, @StringRes int resId, long duration)
+            throws Resources.NotFoundException {
+        return makeText(context, context.getResources().getText(resId), duration);
     }
 
 
