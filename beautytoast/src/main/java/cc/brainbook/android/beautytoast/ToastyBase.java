@@ -1,6 +1,7 @@
 package cc.brainbook.android.beautytoast;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -46,6 +47,21 @@ public class ToastyBase extends AbstractBase {
         toastyBase.setDuration(duration);
 
         return toastyBase;
+    }
+
+    /**
+     * Make a standard toast that just contains a text view with the text from a resource.
+     *
+     * @param context  The context to use.  Usually your {@link android.app.Application}
+     *                 or {@link android.app.Activity} object.
+     * @param resId    The resource id of the string resource to use.  Can be formatted text.
+     * @param duration How long to display the message.
+     *
+     * @throws Resources.NotFoundException if the resource can't be found.
+     */
+    public static ToastyBase makeText(Context context, @StringRes int resId, long duration)
+            throws Resources.NotFoundException {
+        return makeText(context, context.getResources().getText(resId), duration);
     }
 
     public ToastyBase(Context context) {

@@ -4,12 +4,14 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,6 +65,11 @@ public class BeautyToast extends ToastBase {
         beautyToast.isShowIcon(false);
 
         return beautyToast;
+    }
+
+    public static BeautyToast makeText(Context context, @StringRes int resId, long duration)
+            throws Resources.NotFoundException {
+        return makeText(context, context.getResources().getText(resId), duration);
     }
 
     public static BeautyToast makeWarningText(Context context, CharSequence text, long duration) {
