@@ -2,7 +2,7 @@ package cc.brainbook.android.beautytoast.util;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.support.v4.app.NotificationManagerCompat;
+import androidx.core.app.NotificationManagerCompat;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Toast;

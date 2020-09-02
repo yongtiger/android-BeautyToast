@@ -1,11 +1,10 @@
 package cc.brainbook.android.beautytoast.sample;
 
 import android.Manifest;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 
 import cc.brainbook.android.beautytoast.BeautyToasty;

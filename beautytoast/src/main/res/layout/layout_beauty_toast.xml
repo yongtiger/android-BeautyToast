@@ -14,7 +14,8 @@
         android:layout_height="16dp"
         android:layout_gravity="center_vertical"
         android:layout_marginRight="8dp"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:layout_marginEnd="8dp" />
 
     <TextView
         android:id="@+id/message"

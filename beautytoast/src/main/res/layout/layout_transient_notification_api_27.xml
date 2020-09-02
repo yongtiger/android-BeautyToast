@@ -23,21 +23,23 @@
 <!--textAppearance为Toast-->
 <!--文字为黑色-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:orientation="vertical"
-android:background="@drawable/toast_frame_api_27">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="@drawable/toast_frame_api_27"
+    tools:ignore="PrivateResource">
 
     <TextView
     android:id="@+id/message"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_height="0dp"
     android:layout_weight="1"
     android:layout_marginHorizontal="24dp"
     android:layout_marginVertical="15dp"
     android:layout_gravity="center_horizontal"
     android:textAppearance="@style/Toast"
-    android:textColor="@color/primary_text_default_material_light"
-    />
+    android:textColor="@color/primary_text_default_material_light" />
+    <!--tools:ignore="PrivateResource"-->
 
 </LinearLayout>
