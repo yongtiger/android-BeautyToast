@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import androidx.annotation.ColorInt;
 import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.annotation.StringRes;
 import android.util.Log;
@@ -33,7 +34,8 @@ public class ToastBase extends AbstractBase {
      * @param duration
      * @return
      */
-    public static ToastBase makeText(Context context, CharSequence text, long duration) {
+    @NonNull
+    public static ToastBase makeText(@NonNull Context context, CharSequence text, long duration) {
         final ToastBase toastBase = new ToastBase(context);
 
         ///设置View
@@ -58,7 +60,8 @@ public class ToastBase extends AbstractBase {
      *
      * @throws Resources.NotFoundException if the resource can't be found.
      */
-    public static ToastBase makeText(Context context, @StringRes int resId, long duration)
+    @NonNull
+    public static ToastBase makeText(@NonNull Context context, @StringRes int resId, long duration)
             throws Resources.NotFoundException {
         return makeText(context, context.getResources().getText(resId), duration);
     }

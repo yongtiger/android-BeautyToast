@@ -6,6 +6,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.function.Predicate;
@@ -26,7 +28,7 @@ public abstract class AbstractBase {
      */
     private static final int SHOW = 0;
     private static final int CANCEL = 1;
-    private static Handler sMainThreadHandler = new MainThreadHandler();
+    private static final Handler sMainThreadHandler = new MainThreadHandler();
 
     /**
      * Toast队列
@@ -151,10 +153,10 @@ public abstract class AbstractBase {
             }
         }
     }
-    private static void remove(Context context) {
+    private static void remove(@NonNull Context context) {
         remove(context.getClass().toString(), "", true);
     }
-    private static void remove(Context context, String category) {
+    private static void remove(@NonNull Context context, String category) {
         remove(context.getClass().toString(), category, false);
     }
     private static void remove(String className, String category) {
@@ -192,7 +194,7 @@ public abstract class AbstractBase {
      */
     private String mClassName;
 
-    protected AbstractBase(Context context) {
+    protected AbstractBase(@NonNull Context context) {
         mContext = context;
         mClassName = context.getClass().toString();
     }

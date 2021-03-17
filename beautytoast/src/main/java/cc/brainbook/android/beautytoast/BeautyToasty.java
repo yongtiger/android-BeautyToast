@@ -10,6 +10,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import androidx.annotation.ColorInt;
 import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import android.util.Log;
@@ -41,7 +42,8 @@ public class BeautyToasty extends ToastyBase {
      * @param duration
      * @return
      */
-    public static BeautyToasty makeText(Context context, CharSequence text, long duration) {
+    @NonNull
+    public static BeautyToasty makeText(@NonNull Context context, CharSequence text, long duration) {
         final BeautyToasty beautyToasty = new BeautyToasty(context);
 
         ///设置View
@@ -66,13 +68,13 @@ public class BeautyToasty extends ToastyBase {
 
         return beautyToasty;
     }
-
-    public static BeautyToasty makeText(Context context, @StringRes int resId, long duration)
+    @NonNull
+    public static BeautyToasty makeText(@NonNull Context context, @StringRes int resId, long duration)
             throws Resources.NotFoundException {
         return makeText(context, context.getResources().getText(resId), duration);
     }
-
-    public static BeautyToasty makeWarningText(Context context, CharSequence text, long duration) {
+    @NonNull
+    public static BeautyToasty makeWarningText(@NonNull Context context, CharSequence text, long duration) {
         final BeautyToasty beautyToasty = makeText(context, text, duration);
 
         ///设置颜色
@@ -86,13 +88,13 @@ public class BeautyToasty extends ToastyBase {
 
         return beautyToasty;
     }
-
-    public static BeautyToasty makeWarningText(Context context, @StringRes int resId, long duration)
+    @NonNull
+    public static BeautyToasty makeWarningText(@NonNull Context context, @StringRes int resId, long duration)
             throws Resources.NotFoundException {
         return makeText(context, context.getResources().getText(resId), duration);
     }
-
-    public static BeautyToasty makeInfoText(Context context, CharSequence text, long duration) {
+    @NonNull
+    public static BeautyToasty makeInfoText(@NonNull Context context, CharSequence text, long duration) {
         final BeautyToasty beautyToasty = makeText(context, text, duration);
 
         ///设置颜色
@@ -106,13 +108,13 @@ public class BeautyToasty extends ToastyBase {
 
         return beautyToasty;
     }
-
-    public static BeautyToasty makeInfoText(Context context, @StringRes int resId, long duration)
+    @NonNull
+    public static BeautyToasty makeInfoText(@NonNull Context context, @StringRes int resId, long duration)
             throws Resources.NotFoundException {
         return makeText(context, context.getResources().getText(resId), duration);
     }
-
-    public static BeautyToasty makeSuccessText(Context context, CharSequence text, long duration) {
+    @NonNull
+    public static BeautyToasty makeSuccessText(@NonNull Context context, CharSequence text, long duration) {
         final BeautyToasty beautyToasty = makeText(context, text, duration);
 
         ///设置颜色
@@ -126,13 +128,13 @@ public class BeautyToasty extends ToastyBase {
 
         return beautyToasty;
     }
-
-    public static BeautyToasty makeSuccessText(Context context, @StringRes int resId, long duration)
+    @NonNull
+    public static BeautyToasty makeSuccessText(@NonNull Context context, @StringRes int resId, long duration)
             throws Resources.NotFoundException {
         return makeText(context, context.getResources().getText(resId), duration);
     }
-
-    public static BeautyToasty makeErrorText(Context context, CharSequence text, long duration) {
+    @NonNull
+    public static BeautyToasty makeErrorText(@NonNull Context context, CharSequence text, long duration) {
         final BeautyToasty beautyToasty = makeText(context, text, duration);
 
         ///设置颜色
@@ -146,8 +148,8 @@ public class BeautyToasty extends ToastyBase {
 
         return beautyToasty;
     }
-
-    public static BeautyToasty makeErrorText(Context context, @StringRes int resId, long duration)
+    @NonNull
+    public static BeautyToasty makeErrorText(@NonNull Context context, @StringRes int resId, long duration)
             throws Resources.NotFoundException {
         return makeText(context, context.getResources().getText(resId), duration);
     }

@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Handler;
 import androidx.annotation.ColorInt;
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.annotation.StringRes;
 import android.util.Log;
@@ -34,7 +35,8 @@ public class ToastyBase extends AbstractBase {
      * @param duration
      * @return
      */
-    public static ToastyBase makeText(Context context, CharSequence text, long duration) {
+    @NonNull
+    public static ToastyBase makeText(@NonNull Context context, CharSequence text, long duration) {
         final ToastyBase toastyBase = new ToastyBase(context);
 
         ///设置View
@@ -59,7 +61,8 @@ public class ToastyBase extends AbstractBase {
      *
      * @throws Resources.NotFoundException if the resource can't be found.
      */
-    public static ToastyBase makeText(Context context, @StringRes int resId, long duration)
+    @NonNull
+    public static ToastyBase makeText(@NonNull Context context, @StringRes int resId, long duration)
             throws Resources.NotFoundException {
         return makeText(context, context.getResources().getText(resId), duration);
     }
@@ -73,6 +76,7 @@ public class ToastyBase extends AbstractBase {
 
     ///ToastyLayoutParams
     private WindowManager.LayoutParams mToastyLayoutParams;
+    @NonNull
     private WindowManager.LayoutParams getDefaultToastyLayoutParams() {
         final WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
 

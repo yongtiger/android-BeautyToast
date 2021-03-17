@@ -30,8 +30,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
 
-import org.jetbrains.annotations.Contract;
-
 /**
  * Schedule a countdown until a time in the future, with
  * regular notifications on intervals along the way.
@@ -99,7 +97,6 @@ public abstract class CountDownTimer {
     /**
      * Start the countdown.
      */
-    @Contract(" -> this")
     public synchronized final CountDownTimer start() {
         mCancelled = false;
         if (mMillisInFuture <= 0) {

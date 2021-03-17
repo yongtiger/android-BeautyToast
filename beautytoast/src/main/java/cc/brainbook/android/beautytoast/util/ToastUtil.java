@@ -2,12 +2,12 @@ package cc.brainbook.android.beautytoast.util;
 
 import android.content.Context;
 import android.content.res.Resources;
+
+import androidx.annotation.NonNull;
 import androidx.core.app.NotificationManagerCompat;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Toast;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
@@ -59,9 +59,10 @@ public class ToastUtil {
 
         toast.setGravity(Gravity.CENTER, toastLocation[0], toastLocation[1]);
     }
-    private static int[] calToastLocation(@NotNull Context context,
-                                          @NotNull View toastView,
-                                          @NotNull View target,
+    @NonNull
+    private static int[] calToastLocation(@NonNull Context context,
+                                          @NonNull View toastView,
+                                          @NonNull View target,
                                           int targetGravity,
                                           boolean isLayoutFullScreen,
                                           int targetOffsetX, int targetOffsetY) {
@@ -131,7 +132,7 @@ public class ToastUtil {
      * @param context
      * @return
      */
-    public static int getToastOffsetY(@NotNull Context context) {
+    public static int getToastOffsetY(@NonNull Context context) {
         int i = Resources.getSystem().getIdentifier("toast_y_offset", "dimen", "android");
         return context.getResources().getDimensionPixelSize(i);
     }
@@ -145,7 +146,7 @@ public class ToastUtil {
      * @param context
      * @return  -1：代表未获取成功
      */
-    public static int getStatusBarHeightPixelSize(@NotNull Context context) {
+    public static int getStatusBarHeightPixelSize(@NonNull Context context) {
         int statusBarHeight = -1;
 
         //获取status_bar_height资源的ID
@@ -157,7 +158,7 @@ public class ToastUtil {
 
         return statusBarHeight;
     }
-    public static float getStatusBarHeight(@NotNull Context context) {
+    public static float getStatusBarHeight(@NonNull Context context) {
         float statusBarHeight = -1.0f;
 
         //获取status_bar_height资源的ID
@@ -170,7 +171,7 @@ public class ToastUtil {
         return statusBarHeight;
     }
 
-    public static int getNavigationBarHeightPixelSize(@NotNull Context context) {
+    public static int getNavigationBarHeightPixelSize(@NonNull Context context) {
         int navigationBarHeight = -1;
 
         //获取status_bar_height资源的ID
@@ -183,7 +184,7 @@ public class ToastUtil {
         return navigationBarHeight;
     }
 
-    public static float getNavigationBarHeight(@NotNull Context context) {
+    public static float getNavigationBarHeight(@NonNull Context context) {
         float navigationBarHeight = -1.0f;
 
         //获取status_bar_height资源的ID
