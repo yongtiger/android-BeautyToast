@@ -33,8 +33,6 @@ android {
 dependencies {
     implementation project(':beautytoast')
 
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
-
     implementation 'androidx.appcompat:appcompat:1.2.0'
 
     ///[LeakCanary] A memory leak detection library. https://github.com/square/leakcanary
