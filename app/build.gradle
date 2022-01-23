@@ -14,7 +14,6 @@ android {
         versionCode release.versionCode
         versionName release.versionName
 
-        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
@@ -34,10 +33,10 @@ android {
 dependencies {
     implementation project(':beautytoast')
 
-    implementation 'androidx.appcompat:appcompat:1.3.1'
+    implementation 'androidx.appcompat:appcompat:1.4.1'
 
     ///[LeakCanary] A memory leak detection library. https://github.com/square/leakcanary
     ///https://square.github.io/leakcanary/upgrading-to-leakcanary-2.0/
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.7'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.8.1'
 
 }
